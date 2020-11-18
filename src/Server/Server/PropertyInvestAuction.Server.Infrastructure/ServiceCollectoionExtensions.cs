@@ -1,16 +1,55 @@
 ﻿namespace PropertyInvestAuction.Server.Infrastructure
 {
+    using System.Text;
+
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
 
     using PropertyInvestAuction.Data;
     using PropertyInvestAuction.Data.Models;
+    using PropertyInvestAuction.Services.Data;
 
     public static class ServiceCollectoionExtensions
     {
+        public static IServiceCollection AddJwtAuthentication(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var appSettings = GetAppSettings(services, configuration);
+
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services
+                .AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = false,
+                        ValidateLifetime = true,
+                    };
+                });
+
+            return services;
+        }
+
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(opt =>
                         {
                             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -37,6 +76,20 @@
                 .AddEntityFrameworkStores<AppDbContext>();
 
             return services;
+        }
+
+        public static IServiceCollection RegisterAppServices(this IServiceCollection services)
+        {
+            services.AddTransient<IIdentityService, IdentityService>();
+
+            return services;
+        }
+
+        private static AppSettings GetAppSettings(IServiceCollection services, IConfiguration configuration)
+        {
+            var applicationSettingsConfiguration = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(applicationSettingsConfiguration);
+            return applicationSettingsConfiguration.Get<AppSettings>();
         }
     }
 }

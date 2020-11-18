@@ -1,5 +1,6 @@
 ﻿namespace PropertyInvestAuction.Server.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -12,6 +13,7 @@
             _logger = logger;
         }
 
+        [Authorize]
         public ActionResult Get()
         {
             return this.Ok("Works");

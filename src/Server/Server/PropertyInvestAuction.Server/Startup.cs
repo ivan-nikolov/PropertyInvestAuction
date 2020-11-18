@@ -25,6 +25,8 @@ namespace PropertyInvestAuction.Server
             services
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
+                .RegisterAppServices()
+                .AddJwtAuthentication(this.Configuration)
                 .AddControllers();
         }
 
@@ -32,15 +34,17 @@ namespace PropertyInvestAuction.Server
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
 
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app
+            .ApplyMigrations()
+            .AddCors()
+            .UseRouting()
+            .UseAuthentication()
+            .UseAuthorization()
+            .UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
