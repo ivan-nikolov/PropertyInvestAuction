@@ -14,6 +14,7 @@
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult Get()
         {
             return this.Ok("Works");

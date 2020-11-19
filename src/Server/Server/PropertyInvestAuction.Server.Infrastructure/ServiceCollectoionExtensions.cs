@@ -1,5 +1,6 @@
 ﻿namespace PropertyInvestAuction.Server.Infrastructure
 {
+    using System;
     using System.Text;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,6 +8,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
 
     using PropertyInvestAuction.Data;
     using PropertyInvestAuction.Data.Models;
@@ -84,6 +86,23 @@
 
             return services;
         }
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+            => services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Propery Invest Auction API",
+                    
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ivan Iliev",
+                        Email = string.Empty,
+                        Url = new Uri("https://github.com/ivan-nikolov"),
+                    }
+                });
+            });
 
         private static AppSettings GetAppSettings(IServiceCollection services, IConfiguration configuration)
         {

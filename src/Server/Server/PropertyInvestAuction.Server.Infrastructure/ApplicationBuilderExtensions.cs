@@ -16,6 +16,13 @@ namespace PropertyInvestAuction.Server.Infrastructure
                 opt.AllowAnyHeader();
             });
 
+        public static IApplicationBuilder AddSwaggerUi(this IApplicationBuilder app) 
+            => app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Property Invest Auction API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
         public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
         {
             using var services = app.ApplicationServices.CreateScope();

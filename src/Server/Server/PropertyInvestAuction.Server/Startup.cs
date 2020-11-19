@@ -27,6 +27,7 @@ namespace PropertyInvestAuction.Server
                 .AddIdentity()
                 .RegisterAppServices()
                 .AddJwtAuthentication(this.Configuration)
+                .AddSwagger()
                 .AddControllers();
         }
 
@@ -40,8 +41,10 @@ namespace PropertyInvestAuction.Server
 
             app
             .ApplyMigrations()
-            .AddCors()
+            .UseSwagger()
+            .AddSwaggerUi()
             .UseRouting()
+            .AddCors()
             .UseAuthentication()
             .UseAuthorization()
             .UseEndpoints(endpoints =>
