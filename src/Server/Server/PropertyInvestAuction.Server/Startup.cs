@@ -1,15 +1,14 @@
 namespace PropertyInvestAuction.Server
 {
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
     using PropertyInvestAuction.Server.Infrastructure;
+    using PropertyInvestAuction.Server.Models.Identity;
+    using PropertyInvestAuction.Services.Mapping;
 
     public class Startup
     {
@@ -38,6 +37,8 @@ namespace PropertyInvestAuction.Server
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
+
+            AutoMapperConfig.RegisterMappings(typeof(LoginInputModel).Assembly);
 
             app
             .ApplyMigrations()

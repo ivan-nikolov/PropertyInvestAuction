@@ -71,8 +71,8 @@
                     && !t.IsAbstract && !t.IsInterface)
                 .Select(tm => new TypesMap
                 {
-                    Source = tm.GetTypeInfo().GetGenericArguments()[0],
-                    Destination = t
+                    Source = t,
+                    Destination = tm.GetTypeInfo().GetGenericArguments()[0]
                 })
             );
 

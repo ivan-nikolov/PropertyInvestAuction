@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Data\PropertyInvestAuction.Data.Models\PropertyInvestAuction.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\PropertyInvestAuction.Data\PropertyInvestAuction.Data.csproj" />
     <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services.Data\PropertyInvestAuction.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services.Mapping\PropertyInvestAuction.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>
