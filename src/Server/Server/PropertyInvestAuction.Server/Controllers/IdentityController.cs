@@ -31,7 +31,7 @@
                 return this.BadRequest("Passwords do not match.");
             }
 
-            var result = await this.identityService.RegisterAsync(input.UserName, input.Email, input.Password);
+            var result = await this.identityService.RegisterAsync<string>(input.UserName, input.Email, input.Password);
 
             if (result.Succeeded)
             {
@@ -43,10 +43,18 @@
 
         [HttpPost]
         [Route(nameof(Login))]
-        public async Task<LoginResponseModel> Login(LoginInputModel input)
+        public async Task<ActionResult<LoginResponseModel>> Login(LoginInputModel input)
         {
             var secret = this.appSettings.Secret;
-            return new LoginResponseModel {Token = (await this.identityService.LoginAsync(input.UserName, input.Password, secret)).Errors[0] };
+
+            var result = await this.identityService.LoginAsync<LoginResponseModel>(input.UserName, input.Password, secret);
+
+            if (result.Failure)
+            {
+                return this.BadRequest(result.Errors);
+            }
+
+            return this.Ok(result.Model);
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿namespace PropertyInvestAuction.Server.Models.Identity
 {
-    public class LoginResponseModel
+    using PropertyInvestAuction.Services.Mapping;
+    using PropertyInvestAuction.Services.Models.Identity;
+
+    public class LoginResponseModel : IMapFrom<LoginModel>
     {
         public string Token { get; set; }
 

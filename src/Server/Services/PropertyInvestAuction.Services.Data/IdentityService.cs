@@ -13,6 +13,11 @@
     using PropertyInvestAuction.Data.Models;
     using PropertyInvestAuction.Services.Models;
 
+    using PropertyInvestAuction.Services.Mapping;
+
+    using System.Collections.Generic;
+    using PropertyInvestAuction.Services.Models.Identity;
+
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<AppUser> userManager;
@@ -22,7 +27,7 @@
             this.userManager = userManager;
         }
 
-        public async Task<Result> LoginAsync(string userName, string password, string secret)
+        public async Task<Result<T>> LoginAsync<T>(string userName, string password, string secret)
         {
             var user = await this.userManager.FindByNameAsync(userName);
             if (user == null)
@@ -36,12 +41,19 @@
                 return new string[] { "Invalid Password" };
             }
 
-            var role = await this.userManager.GetRolesAsync(user);
+            var token = this.GetJwtToken(user.Id, user.UserName, secret);
+            var roles = await this.userManager.GetRolesAsync(user) as List<string>;
 
-            return new string[] { this.GetJwtToken(user.Id, user.UserName, secret), role };
+            var model = new LoginModel
+            {
+                Token = token,
+                Roles = roles
+            };
+
+            return model.To<T>();
         }
 
-        public async Task<Result> RegisterAsync(string userName, string email, string password)
+        public async Task<Result<T>> RegisterAsync<T>(string userName, string email, string password)
         {
             var user = new AppUser()
             {

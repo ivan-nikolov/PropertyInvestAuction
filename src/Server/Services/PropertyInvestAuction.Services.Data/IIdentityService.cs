@@ -6,11 +6,11 @@
 
     public interface IIdentityService
     {
-        Task<Result> RegisterAsync(
+        Task<Result<T>> RegisterAsync<T>(
             string userName,
             string email,
             string password);
 
-        Task<Result> LoginAsync(string userName, string password, string secret);
+        Task<Result<T>> LoginAsync<T>(string userName, string password, string secret);
     }
 }
