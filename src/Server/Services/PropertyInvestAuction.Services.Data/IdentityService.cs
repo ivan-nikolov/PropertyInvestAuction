@@ -36,7 +36,9 @@
                 return new string[] { "Invalid Password" };
             }
 
-            return new string[] { this.GetJwtToken(user.Id, user.UserName, secret) };
+            var role = await this.userManager.GetRolesAsync(user);
+
+            return new string[] { this.GetJwtToken(user.Id, user.UserName, secret), role };
         }
 
         public async Task<Result> RegisterAsync(string userName, string email, string password)

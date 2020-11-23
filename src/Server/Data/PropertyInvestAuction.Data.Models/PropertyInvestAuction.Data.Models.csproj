@@ -8,4 +8,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\PropertyInvestAuction.Common\PropertyInvestAuction.Common.csproj" />
+    <ProjectReference Include="..\PropertyInvestAuction.Data.Common\PropertyInvestAuction.Data.Common.csproj" />
+  </ItemGroup>
+
 </Project>

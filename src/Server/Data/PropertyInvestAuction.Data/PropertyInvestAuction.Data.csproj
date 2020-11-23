@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PropertyInvestAuction.Common\PropertyInvestAuction.Common.csproj" />
     <ProjectReference Include="..\PropertyInvestAuction.Data.Common\PropertyInvestAuction.Data.Common.csproj" />
     <ProjectReference Include="..\PropertyInvestAuction.Data.Models\PropertyInvestAuction.Data.Models.csproj" />
   </ItemGroup>
