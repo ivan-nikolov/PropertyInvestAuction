@@ -23,7 +23,7 @@
             => await this.countryRepo.AllAsNoTracking()
             .AnyAsync(c => c.Id == id);
 
-        public async Task CreateAsync(string name)
+        public async Task<string> CreateAsync(string name)
         {
             var country = new Country
             {
@@ -32,6 +32,8 @@
 
             await this.countryRepo.AddAsync(country);
             await this.countryRepo.SaveChangesAsync();
+
+            return country.Id;
         }
 
         public async Task DeleteAsync(string id)

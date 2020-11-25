@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PropertyInvestAuction.Common\PropertyInvestAuction.Common.csproj" />
     <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services.Mapping\PropertyInvestAuction.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services.Models\PropertyInvestAuction.Services.Models.csproj" />
   </ItemGroup>

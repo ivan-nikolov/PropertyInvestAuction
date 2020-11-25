@@ -7,7 +7,7 @@
 
     public interface ICountryService : ITransient
     {
-        Task CreateAsync(string name);
+        Task<string> CreateAsync(string name);
 
         Task DeleteAsync(string id);
 
