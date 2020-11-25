@@ -6,8 +6,10 @@ namespace PropertyInvestAuction.Server
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    using PropertyInvestAuction.Data;
     using PropertyInvestAuction.Server.Infrastructure;
     using PropertyInvestAuction.Server.Models.Identity;
+    using PropertyInvestAuction.Services.Data;
     using PropertyInvestAuction.Services.Mapping;
 
     public class Startup
@@ -25,6 +27,7 @@ namespace PropertyInvestAuction.Server
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
                 .RegisterAppServices()
+                .AddServices(typeof(IIdentityService).Assembly)
                 .AddJwtAuthentication(this.Configuration)
                 .AddSwagger()
                 .AddControllers();

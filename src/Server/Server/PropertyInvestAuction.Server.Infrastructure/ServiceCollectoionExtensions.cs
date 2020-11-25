@@ -1,6 +1,9 @@
 ﻿namespace PropertyInvestAuction.Server.Infrastructure
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using System.Text;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,12 +13,43 @@
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
 
+    using PropertyInvestAuction.Common.ServiceTypes;
     using PropertyInvestAuction.Data;
+    using PropertyInvestAuction.Data.Common.Repositories;
     using PropertyInvestAuction.Data.Models;
+    using PropertyInvestAuction.Data.Repositories;
     using PropertyInvestAuction.Services.Data;
 
     public static class ServiceCollectoionExtensions
     {
+        public static IServiceCollection AddServices(this IServiceCollection services,
+            params Assembly[] assemblies)
+        {
+            
+
+            var mapList = GetServices(assemblies);
+
+            foreach (var map in mapList)
+            {
+                var service = map.Service;
+                var instance = map.Implementation;
+                if (typeof(ITransient).IsAssignableFrom(service))
+                {
+                    services.AddTransient(service, instance);
+                }
+                else if (typeof(IScoped).IsAssignableFrom(service))
+                {
+                    services.AddScoped(service, instance);
+                }
+                else if (typeof(ISingleton).IsAssignableFrom(service))
+                {
+                    services.AddSingleton(service, instance);
+                }
+            }
+
+            return services;
+        }
+
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -82,7 +116,8 @@
 
         public static IServiceCollection RegisterAppServices(this IServiceCollection services)
         {
-            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             return services;
         }
@@ -109,6 +144,46 @@
             var applicationSettingsConfiguration = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(applicationSettingsConfiguration);
             return applicationSettingsConfiguration.Get<AppSettings>();
+        }
+
+        private static List<TypeMap> GetServices(params Assembly[] assemblies)
+        {
+            var servicesList = new List<TypeMap>();
+            foreach (var assembly in assemblies)
+            {
+                var services = assembly.DefinedTypes
+                    .Where(t => t.ImplementedInterfaces
+                        .Any(i => i.Equals(typeof(ITransient))
+                            || i.Equals(typeof(IScoped))
+                            || i.Equals(typeof(ISingleton)))
+                        && t.IsClass
+                        && !t.IsAbstract)
+                    .Select(t => new TypeMap 
+                    { 
+                        Implementation = t,
+                        Service = t.ImplementedInterfaces.FirstOrDefault(i => 
+                            (typeof(ITransient).IsAssignableFrom(i)
+                            || typeof(IScoped).IsAssignableFrom(i)
+                            ||typeof(ISingleton).IsAssignableFrom(i)) 
+                            && i.GetInterfaces().Any(ii => ii == typeof(ITransient)
+                                || ii == typeof(IScoped)
+                                || ii == typeof(ISingleton)))
+                    })
+                    .Where(t => t.Service != null);
+
+                servicesList.AddRange(services);
+            }
+
+            return servicesList;
+        }
+
+        private class TypeMap
+        {
+            public Type Implementation { get; set; }
+
+            public Type Service { get; set; }
+
+            public Type[] Services { get; set; }
         }
     }
 }

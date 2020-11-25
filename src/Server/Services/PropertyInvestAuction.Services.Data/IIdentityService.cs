@@ -1,6 +1,8 @@
 ﻿namespace PropertyInvestAuction.Services.Data
 {
-    public interface IIdentityService
+    using PropertyInvestAuction.Common.ServiceTypes;
+
+    public interface IIdentityService : ITransient
     {
         string GetJwtToken(string userId, string userName, string secret);
     }

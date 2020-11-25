@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface ICountryService
+    using PropertyInvestAuction.Common.ServiceTypes;
+
+    public interface ICountryService : ITransient
     {
         Task CreateAsync(string name);
 
