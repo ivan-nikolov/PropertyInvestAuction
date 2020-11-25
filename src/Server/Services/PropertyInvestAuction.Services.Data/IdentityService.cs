@@ -16,60 +16,9 @@
     using PropertyInvestAuction.Services.Mapping;
 
     using System.Collections.Generic;
-    using PropertyInvestAuction.Services.Models.Identity;
-
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<AppUser> userManager;
-
-        public IdentityService(UserManager<AppUser> userManager)
-        {
-            this.userManager = userManager;
-        }
-
-        public async Task<Result<T>> LoginAsync<T>(string userName, string password, string secret)
-        {
-            var user = await this.userManager.FindByNameAsync(userName);
-            if (user == null)
-            {
-                return new string[] { "Invalid UserName" };
-            }
-
-            var passwordValid = await this.userManager.CheckPasswordAsync(user, password);
-            if (!passwordValid)
-            {
-                return new string[] { "Invalid Password" };
-            }
-
-            var token = this.GetJwtToken(user.Id, user.UserName, secret);
-            var roles = await this.userManager.GetRolesAsync(user) as List<string>;
-
-            var model = new LoginModel
-            {
-                Token = token,
-                Roles = roles
-            };
-
-            return model.To<T>();
-        }
-
-        public async Task<Result<T>> RegisterAsync<T>(string userName, string email, string password)
-        {
-            var user = new AppUser()
-            {
-                UserName = userName,
-                Email = email
-            };
-            var result = await this.userManager.CreateAsync(user, password);
-            if (!result.Succeeded)
-            {
-                return result.Errors.Select(x => x.Description).ToArray();
-            }
-
-            return result.Succeeded;
-        }
-
-        private string GetJwtToken(string userId, string userName, string secret)
+        public string GetJwtToken(string userId, string userName, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);

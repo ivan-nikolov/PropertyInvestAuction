@@ -1,5 +1,7 @@
 ﻿namespace PropertyInvestAuction.Server.Models.Identity
 {
+    using System.Collections.Generic;
+
     using PropertyInvestAuction.Services.Mapping;
     using PropertyInvestAuction.Services.Models.Identity;
 
@@ -7,6 +9,6 @@
     {
         public string Token { get; set; }
 
-        public string[] Roles { get; set; }
+        public List<string> Roles { get; set; }
     }
 }
