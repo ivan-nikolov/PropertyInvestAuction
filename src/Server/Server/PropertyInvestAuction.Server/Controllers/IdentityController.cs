@@ -1,6 +1,8 @@
 ﻿namespace PropertyInvestAuction.Server.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -68,13 +70,12 @@
                 return Unauthorized();
             }
 
-            var token = this.identityService.GetJwtToken(user.Id, user.UserName, this.appSettings.Secret);
-            var roles = await this.userManager.GetRolesAsync(user) as List<string>;
+            var roles = await this.userManager.GetRolesAsync(user);
+            var token = this.identityService.GetJwtToken(user.Id, user.UserName, roles, this.appSettings.Secret);
 
             var model = new LoginResponseModel
             {
-                Token = token,
-                Roles = roles
+                Token = token
             };
 
 

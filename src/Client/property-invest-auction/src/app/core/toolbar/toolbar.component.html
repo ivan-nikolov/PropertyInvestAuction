@@ -1,0 +1,30 @@
+<mat-toolbar class="toolbar" color="primary">
+    <a color="primary" routerLink="">
+      <img src="../assets/logo.jpeg" alt="">
+    </a> 
+      <mat-nav-list>
+        <mat-list-item [routerLinkActive]="['active']">
+          <a color="accent" [matMenuTriggerFor]="menu">
+            Profile
+          </a>
+          <mat-menu #menu="matMenu">
+            <div *ngIf="!isAuthenticated">
+              <button mat-menu-item routerLink="/login">
+                <mat-icon>login</mat-icon>
+                <span>Sign In</span>
+              </button>
+              <button mat-menu-item routerLink="/register">
+                <mat-icon>person</mat-icon>
+                <span>Sign Up</span>
+              </button>
+            </div>
+            <div *ngIf="isAuthenticated">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </mat-menu>
+        </mat-list-item>
+      </mat-nav-list>
+</mat-toolbar>

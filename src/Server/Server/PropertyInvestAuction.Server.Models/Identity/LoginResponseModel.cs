@@ -8,7 +8,5 @@
     public class LoginResponseModel : IMapFrom<LoginModel>
     {
         public string Token { get; set; }
-
-        public List<string> Roles { get; set; }
     }
 }

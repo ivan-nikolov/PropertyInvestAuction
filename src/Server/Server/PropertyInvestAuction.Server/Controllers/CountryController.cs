@@ -3,10 +3,13 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using PropertyInvestAuction.Server.Models.Country;
     using PropertyInvestAuction.Services.Data;
+
+    using static PropertyInvestAuction.Common.GlobalConstants;
 
     public class CountryController : BaseApiController
     {
@@ -19,6 +22,7 @@
 
         [HttpPost]
         [Route(nameof(Create))]
+        [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(CreateInputModel input)
         {
             if (!ModelState.IsValid)
@@ -33,12 +37,15 @@
 
         [HttpGet]
         [Route(nameof(All))]
+        [Authorize]
         public async Task<IEnumerable<CountryListModel>> All()
         {
             return await this.countryService.GetAllAsync<CountryListModel>();
         }
 
         [HttpPost]
+        [Route(nameof(Delete))]
+        [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Delete(string id)
         {
             await this.countryService.DeleteAsync(id);
