@@ -10,10 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './user/services/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserAuthGuard } from './user/services/userAuth.guard';
 import { JwtService } from './user/services/jwt.service';
 import { RoleGuard } from './user/services/role.guard';
+import { TokenInterceptorService } from './user/services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,16 @@ import { RoleGuard } from './user/services/role.guard';
     CoreModule,
     HttpClientModule
   ],
-  providers: [UserService, UserAuthGuard, JwtService, RoleGuard],
+  providers: [
+    UserService,
+    UserAuthGuard,
+    JwtService,
+    RoleGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -59,6 +59,8 @@ export class UserService {
       var decodedToken = this.jwtService.decodeToken(token);
       return decodedToken.roles;
     }
+
+    return new Array();
   }
 
   isAuthenticated() {
