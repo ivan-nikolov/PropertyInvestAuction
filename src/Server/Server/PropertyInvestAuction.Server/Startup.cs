@@ -11,6 +11,7 @@ namespace PropertyInvestAuction.Server
     using PropertyInvestAuction.Server.Models.Identity;
     using PropertyInvestAuction.Services.Data;
     using PropertyInvestAuction.Services.Mapping;
+    using PropertyInvestAuction.Services.Models.Identity;
 
     public class Startup
     {
@@ -41,7 +42,7 @@ namespace PropertyInvestAuction.Server
                 app.UseMigrationsEndPoint();
             }
 
-            AutoMapperConfig.RegisterMappings(typeof(LoginInputModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(LoginInputModel).Assembly, typeof(UserServiceModel).Assembly);
 
             app
             .ApplyMigrations()

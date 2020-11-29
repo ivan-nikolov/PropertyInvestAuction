@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +12,11 @@
     using PropertyInvestAuction.Server.Infrastructure;
     using PropertyInvestAuction.Server.Models.Identity;
     using PropertyInvestAuction.Services.Data;
+
+    using static PropertyInvestAuction.Common.GlobalConstants;
+    using static PropertyInvestAuction.Common.ErrorMessages;
+    using Microsoft.AspNetCore.Authorization;
+    using System.Security.Claims;
 
     public class IdentityController : BaseApiController
     {
@@ -36,7 +40,7 @@
         {
             if (input.Password != input.ConfirmPassword)
             {
-                return this.BadRequest("Passwords do not match.");
+                return this.BadRequest(PasswordsDoNotMatch);
             }
 
             var user = new AppUser()
@@ -50,6 +54,8 @@
             {
                 return BadRequest(result.Errors);
             }
+
+            await this.userManager.AddToRoleAsync(user, ClientRoleName);
 
             return Ok();
         }
@@ -80,6 +86,72 @@
 
 
             return this.Ok(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<int> UsersCount()
+        {
+            return await this.identityService.GetUsersCount();
+        }
+
+        [HttpGet]
+        [Route(nameof(GetPage))]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<ActionResult<IEnumerable<UserResponseModel>>> GetPage([FromQuery]PageRequestModel pageRequest)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var value in this.ModelState.Values)
+                {
+                    errors.AddRange(value.Errors.Select(e => e.ErrorMessage));
+                }
+                return BadRequest(errors);
+            }
+
+            var users = (await this.identityService
+                .GetAll(pageRequest.Page, pageRequest.PageSize))
+                .Select(u => new UserResponseModel { 
+                    Id = u.Id,
+                    Username = u.Username,
+                    Email = u.Email,
+                    Roles = u.Roles,
+                    IsAdministrator = u.Roles.Any(x => x == AdministratorRoleName)
+                });
+            
+            return Ok(users);
+        }
+
+        [HttpPost]
+        [Route(nameof(AddToAdmin))]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<ActionResult> AddToAdmin(ChangeRoleRequestModel requestModel)
+        {
+            var user = await this.userManager.FindByIdAsync(requestModel.Id);
+            if (user == null)
+            {
+                return BadRequest(UserNotFound);
+            }
+
+            await this.userManager.AddToRoleAsync(user, AdministratorRoleName);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route(nameof(RemoveFromAdmin))]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<ActionResult> RemoveFromAdmin(ChangeRoleRequestModel requestModel)
+        {
+            var user = await this.userManager.FindByIdAsync(requestModel.Id);
+            if (user == null)
+            {
+                return this.BadRequest(UserNotFound);
+            }
+
+            await this.userManager.RemoveFromRoleAsync(user, AdministratorRoleName);
+            return Ok();
         }
     }
 }

@@ -12,6 +12,10 @@ export class ToolbarComponent {
     return this.userService.isAuthenticated();
   }
 
+  get isAdministrator () {
+    return this.userService.getRoles().some(r => r === 'Administrator')
+  }
+
   constructor(private userService: UserService) { }
 
   logout() {

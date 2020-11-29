@@ -6,6 +6,7 @@ import { RegisterInputModel } from '../models/registerInputModel';
 import { LoginInputModel } from '../models/loginInputModel';
 import { LoginResponseModel } from '../models/loginResponseModel';
 import { JwtService } from './jwt.service';
+import { User } from '../models/user';
 
 const apiUrl = environment.apiUrl;
 
@@ -15,6 +16,14 @@ const apiUrl = environment.apiUrl;
 export class UserService {
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }
+
+  all(page: number, pageSize: number): Observable<User[]> {
+    return this.http.get<User[]>(`${apiUrl}/identity/GetPage?page=${page}&pageSize=${pageSize}`);
+  }
+
+  getCount(): Observable<number>{
+    return this.http.get<number>(apiUrl + '/identity');
+  }
 
   login(data: LoginInputModel) : Observable<LoginResponseModel> {
     return this.http.post<LoginResponseModel>(apiUrl + '/identity/login', data);
@@ -69,5 +78,13 @@ export class UserService {
     }
 
     return false;
+  }
+
+  addToAdmin(id: string): Observable<any> {
+    return this.http.post(apiUrl + '/identity/addToAdmin', {id});
+  }
+
+  removeFromAdmin(id: string): Observable<any> {
+    return this.http.post(apiUrl + '/identity/removeFromAdmin', { id });
   }
 }

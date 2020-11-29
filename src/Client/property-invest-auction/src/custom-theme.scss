@@ -14,7 +14,7 @@
 // hue. Available color palettes: https://material.io/design/color/
 $property-invest-auction-primary: mat-palette($mat-lime);
 $property-invest-auction-dark-primary: mat-palette($mat-lime, A700);
-$property-invest-auction-accent: mat-palette($mat-light-blue, A200, A100, A400);
+$property-invest-auction-accent: mat-palette($mat-light-blue, 50, A200, A100, A400);
 $property-invest-auction-divider: mat-palette($mat-gray, A400);
 
 // The warn palette is optional (defaults to red).
@@ -30,6 +30,13 @@ $property-invest-auction-theme: mat-light-theme((
     dark-primary: $property-invest-auction-dark-primary,
   )
 ));
+
+:root {
+  --color-primary: #{mat-color($property-invest-auction-primary)};
+  --color-accent: #{mat-color($property-invest-auction-accent)};
+  --color-light-accent: #{mat-color($property-invest-auction-accent, 50)};
+  --color-warn: #{mat-color($property-invest-auction-warn)};
+}
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

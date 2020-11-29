@@ -2,7 +2,7 @@
     <a color="primary" routerLink="">
       <img src="../assets/logo.jpeg" alt="">
     </a> 
-      <mat-nav-list>
+      <mat-nav-list class="toolbar-nav">
         <mat-list-item [routerLinkActive]="['active']">
           <a color="accent" [matMenuTriggerFor]="menu">
             Profile
@@ -24,6 +24,23 @@
                 <span>Sign Out</span>
               </button>
             </div>
+          </mat-menu>
+        </mat-list-item>
+
+        
+        <mat-list-item *ngIf="isAdministrator" [routerLinkActive]="['active']">
+          <a color="accent" [matMenuTriggerFor]="menu">
+            Administration
+          </a>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item routerLink="/user/all">
+                <mat-icon>people</mat-icon>
+                <span>All Users</span>
+              </button>
+              <button mat-menu-item routerLink="/location">
+                <mat-icon>where_to_vote</mat-icon>
+                <span>Locations</span>
+              </button>
           </mat-menu>
         </mat-list-item>
       </mat-nav-list>

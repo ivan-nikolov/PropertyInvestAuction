@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+}
+
+tr:nth-child(even){
+  background-color: var(--color-light-accent);
+}
+
+.mat-elevation-z8 {
+    margin-top: 5%;
+    max-width: 90%;
+    margin: 5% auto;
+}
+

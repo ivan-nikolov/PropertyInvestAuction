@@ -22,6 +22,17 @@
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) {}
 
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Bid> Bids { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Neighborhood> Neighborhoods { get; set; }
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Property> Properties { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

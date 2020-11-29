@@ -29,3 +29,7 @@
     color: #0288d1;
     padding: 0px;
 }
+
+.toolbar-nav {
+    display: flex;
+}

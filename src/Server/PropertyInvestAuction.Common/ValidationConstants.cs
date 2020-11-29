@@ -33,5 +33,8 @@
 
         public const int PropertyDescriptionMinLength = 10;
         public const int PropertyDescriptionMaxLength = 50;
+
+        public const int PageMinNumber = 0;
+        public const int PageMinSize = 1;
     }
 }
