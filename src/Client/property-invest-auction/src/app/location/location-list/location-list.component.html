@@ -1,0 +1,42 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let country of countries" hideToggle (opened)="loadCities(country.id)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{country.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-container *ngIf="country.cities">
+          <mat-accordion>
+              <mat-expansion-panel *ngFor="let city of country.cities" hideToggle (opened)="loadNeighborhoods(city.id, country.id)">
+                
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                       {{city.name}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <ng-container *ngIf="city.neighborhoods">
+                    <mat-accordion>
+                        
+                      <mat-expansion-panel *ngFor="let neighborhood of city.neighborhoods" hideToggle>
+                          <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                  {{neighborhood.name}}
+                              </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          
+                      </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-container>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+      </ng-container>
+        
+      
+    </mat-expansion-panel>
+    
+  </mat-accordion>
+  
+  

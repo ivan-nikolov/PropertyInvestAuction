@@ -7,6 +7,7 @@ import { LoginInputModel } from '../models/loginInputModel';
 import { LoginResponseModel } from '../models/loginResponseModel';
 import { JwtService } from './jwt.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 const apiUrl = environment.apiUrl;
 
@@ -15,7 +16,10 @@ const apiUrl = environment.apiUrl;
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private jwtService: JwtService) { }
+  constructor(
+    private http: HttpClient,
+    private jwtService: JwtService,
+    private router: Router) { }
 
   all(page: number, pageSize: number, query: string): Observable<User[]> {
     return this.http.get<User[]>(`${apiUrl}/identity/GetPage?page=${page}&pageSize=${pageSize}&query=${query}`);
@@ -36,6 +40,7 @@ export class UserService {
   logout(){
     if(this.isAuthenticated()) {
       this.removeUserData();
+      this.router.navigateByUrl('/');
     }
   }
 

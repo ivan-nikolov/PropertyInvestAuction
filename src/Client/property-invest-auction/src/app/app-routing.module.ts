@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { LocationListComponent } from './location/location-list/location-list.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { RoleGuard } from './user/services/role.guard';
@@ -33,6 +34,15 @@ const routes: Routes = [
   {
     path: 'user/all',
     component: UserListComponent,
+    canActivate: [UserAuthGuard, RoleGuard],
+    data: {
+      isAuthenticated: true,
+      expectedRole: 'Administrator'
+    }
+  },
+  {
+    path: 'location',
+    component: LocationListComponent,
     canActivate: [UserAuthGuard, RoleGuard],
     data: {
       isAuthenticated: true,

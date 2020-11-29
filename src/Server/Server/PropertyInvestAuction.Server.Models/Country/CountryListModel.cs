@@ -1,6 +1,8 @@
 ﻿namespace PropertyInvestAuction.Server.Models.Country
 {
-    public class CountryListModel
+    using PropertyInvestAuction.Services.Mapping;
+
+    public class CountryListModel : IMapFrom<Data.Models.Country>
     {
         public string Id { get; set; }
 

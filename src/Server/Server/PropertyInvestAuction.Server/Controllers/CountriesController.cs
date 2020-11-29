@@ -11,11 +11,11 @@
 
     using static PropertyInvestAuction.Common.GlobalConstants;
 
-    public class CountryController : BaseApiController
+    public class CountriesController : BaseApiController
     {
         private readonly ICountryService countryService;
 
-        public CountryController(ICountryService countryService)
+        public CountriesController(ICountryService countryService)
         {
             this.countryService = countryService;
         }

@@ -15,6 +15,8 @@ import { UserAuthGuard } from './user/services/userAuth.guard';
 import { JwtService } from './user/services/jwt.service';
 import { RoleGuard } from './user/services/role.guard';
 import { TokenInterceptorService } from './user/services/token-interceptor.service';
+import { LocationModule } from './location/location.module'
+import { LocationService } from './location/services/location.service'
 
 @NgModule({
   declarations: [
@@ -27,12 +29,15 @@ import { TokenInterceptorService } from './user/services/token-interceptor.servi
     BrowserAnimationsModule,
     ReactiveFormsModule,
     UserModule,
+    LocationModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    LocationModule
   ],
   providers: [
     UserService,
     UserAuthGuard,
+    LocationService,
     JwtService,
     RoleGuard,
     {
