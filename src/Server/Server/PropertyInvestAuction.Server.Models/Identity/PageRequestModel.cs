@@ -12,5 +12,7 @@
 
         [Range(PageMinSize, int.MaxValue, ErrorMessage = PageSizeErrorMessage)]
         public int PageSize { get; set; }
+
+        public string Query { get; set; }
     }
 }

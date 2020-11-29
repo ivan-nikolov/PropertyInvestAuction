@@ -111,7 +111,7 @@
             }
 
             var users = (await this.identityService
-                .GetAll(pageRequest.Page, pageRequest.PageSize))
+                .GetAll(pageRequest.Page, pageRequest.PageSize, pageRequest.Query ?? string.Empty))
                 .Select(u => new UserResponseModel { 
                     Id = u.Id,
                     Username = u.Username,

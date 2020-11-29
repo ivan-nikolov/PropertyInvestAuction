@@ -10,7 +10,7 @@
     {
         string GetJwtToken(string id, string username, IEnumerable<string> roles, string secret);
 
-        Task<IEnumerable<UserServiceModel>> GetAll(int page, int pageSize);
+        Task<IEnumerable<UserServiceModel>> GetAll(int page, int pageSize, string query);
 
         Task<int> GetUsersCount();
     }

@@ -10,5 +10,10 @@ tr:nth-child(even){
     margin-top: 5%;
     max-width: 90%;
     margin: 5% auto;
+    
+    background-color: white;
 }
 
+mat-form-field {
+  margin-left: 25px;
+}

@@ -17,8 +17,8 @@ export class UserService {
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }
 
-  all(page: number, pageSize: number): Observable<User[]> {
-    return this.http.get<User[]>(`${apiUrl}/identity/GetPage?page=${page}&pageSize=${pageSize}`);
+  all(page: number, pageSize: number, query: string): Observable<User[]> {
+    return this.http.get<User[]>(`${apiUrl}/identity/GetPage?page=${page}&pageSize=${pageSize}&query=${query}`);
   }
 
   getCount(): Observable<number>{

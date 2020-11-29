@@ -27,10 +27,11 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<UserServiceModel>> GetAll(int page, int pageSize)
+        public async Task<IEnumerable<UserServiceModel>> GetAll(int page, int pageSize, string query)
         {
             var users = await this.userRepo.AllAsNoTracking()
-                .Include(u => u.Roles)
+            .Include(u => u.Roles)
+            .Where(u => u.UserName.Contains(query))
             .Skip(page * pageSize)
             .Take(pageSize)
             .OrderBy(u => u.UserName)
