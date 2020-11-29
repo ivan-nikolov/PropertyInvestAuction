@@ -5,7 +5,7 @@
 
     using PropertyInvestAuction.Common.ServiceTypes;
 
-    public interface ICountryService : ITransient
+    public interface ICountriesService : ITransient
     {
         Task<string> CreateAsync(string name);
 

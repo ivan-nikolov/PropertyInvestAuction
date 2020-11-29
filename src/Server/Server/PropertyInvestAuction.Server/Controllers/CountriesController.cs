@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using PropertyInvestAuction.Server.Models.Countries;
     using PropertyInvestAuction.Server.Models.Country;
     using PropertyInvestAuction.Services.Data;
 
@@ -13,9 +14,9 @@
 
     public class CountriesController : BaseApiController
     {
-        private readonly ICountryService countryService;
+        private readonly ICountriesService countryService;
 
-        public CountriesController(ICountryService countryService)
+        public CountriesController(ICountriesService countryService)
         {
             this.countryService = countryService;
         }

@@ -10,11 +10,11 @@
     using PropertyInvestAuction.Data.Models;
     using PropertyInvestAuction.Services.Mapping;
 
-    public class CountryService : ICountryService
+    public class CountriesService : ICountriesService
     {
         private readonly IDeletableEntityRepository<Country> countryRepo;
 
-        public CountryService(IDeletableEntityRepository<Country> coutryRepo)
+        public CountriesService(IDeletableEntityRepository<Country> coutryRepo)
         {
             this.countryRepo = coutryRepo;
         }
