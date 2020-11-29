@@ -9,10 +9,16 @@
 
     public interface ICitiesService : ITransient
     {
-        Task<Result> Create(string countryId, string name);
+        Task<Result> CreateAsync(string countryId, string name);
 
-        Task<IEnumerable<T>> All<T>();
+        Task<IEnumerable<T>> AllAsync<T>();
 
-        Task<T> GetById<T>(string id);
+        Task<T> GetByIdAsync<T>(string id);
+
+        Task<Result> EditAsync(string id, string name);
+
+        Task<Result> DeleteAsync(string id);
+
+        Task<bool> CheckIfExistsAsync(string id);
     }
 }
