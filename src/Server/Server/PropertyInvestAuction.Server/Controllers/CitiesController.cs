@@ -27,6 +27,10 @@
         public async Task<IEnumerable<CityResponseModel>> All()
             => await this.citiesService.AllAsync<CityResponseModel>();
 
+        [HttpGet]
+        public async Task<IEnumerable<CityResponseModel>> AllByCoutry(string coutryId)
+            => await this.citiesService.GetByCountryIdAsync<CityResponseModel>(coutryId);
+
         [HttpPost]
         [Route(nameof(Create))]
         [Authorize(Roles = AdministratorRoleName)]

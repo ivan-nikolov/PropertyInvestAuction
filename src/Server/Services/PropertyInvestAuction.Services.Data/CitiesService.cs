@@ -72,6 +72,13 @@
             return true;
         }
 
+        public async Task<IEnumerable<T>> GetByCountryIdAsync<T>(string countryId)
+            => await this.cityRepo.AllAsNoTracking()
+            .Where(c => c.CountryId == countryId)
+            .To<T>()
+            .ToListAsync();
+
+
         public async Task<T> GetByIdAsync<T>(string id)
             => await this.cityRepo.AllAsNoTracking()
             .Where(c => c.Id == id)

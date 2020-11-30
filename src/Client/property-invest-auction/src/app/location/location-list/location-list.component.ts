@@ -23,12 +23,10 @@ export class LocationListComponent {
   }
 
   loadCities(countryId: string){
-     this.countries.filter(c => c.id === countryId)[0].cities = [
-      {id: 'vn', name: 'Varna', neighborhoods: []},
-      {id: 'vn', name: 'Sofia', neighborhoods: []},
-      {id: 'vn', name: 'Plovdiv', neighborhoods: []},
-      {id: 'vn', name: 'Burgas', neighborhoods: []},
-    ]
+    this.locationService.loadCitiesByCountryId(countryId).subscribe(data => {
+      this.countries.filter(c => c.id === countryId)[0].cities = data;
+    })   
+  
   }
 
   loadNeighborhoods(cityId: string, countryId: string) {

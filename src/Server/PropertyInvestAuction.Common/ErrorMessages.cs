@@ -6,5 +6,6 @@
         public const string UserNotFound = "User not found";
 
         public const string CityDoesNotExists = "Citi does not exists.";
+        public const string NeighborhoodDoesNotExists = "Neighborhood does not exists.";
     }
 }

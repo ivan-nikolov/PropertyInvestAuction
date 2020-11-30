@@ -15,6 +15,8 @@
 
         Task<T> GetByIdAsync<T>(string id);
 
+        Task<IEnumerable<T>> GetByCountryIdAsync<T>(string countryId);
+
         Task<Result> EditAsync(string id, string name);
 
         Task<Result> DeleteAsync(string id);
