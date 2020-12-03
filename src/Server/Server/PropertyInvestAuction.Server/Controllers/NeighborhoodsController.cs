@@ -28,8 +28,9 @@
         }
 
         [HttpGet]
+        [Route(nameof(GetByCityId))]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<NeighborhoodResponseModel>>> GetByCityId(string cityId)
+        public async Task<ActionResult<IEnumerable<NeighborhoodResponseModel>>> GetByCityId([FromQuery]string cityId)
         {
             if (!await this.citiesService.CheckIfExistsAsync(cityId))
             {
@@ -44,7 +45,7 @@
         [HttpPost]
         [Route(nameof(Create))]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult> Create(CreateRequestModel input)
+        public async Task<ActionResult> Create(NeighborhoodCreateRequestModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -67,11 +68,11 @@
         }
 
         [HttpPut]
-        [Route(nameof(Edit))]
+        [Route(Id)]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult> Edit(EditRequestModel input)
+        public async Task<ActionResult> Edit(string id, NeighborhoodEditRequestModel input)
         {
-            var result = await this.neighborhoodsService.EditAsync(input.Id, input.Name);
+            var result = await this.neighborhoodsService.EditAsync(id, input.Name);
             if (result.Failure)
             {
                 return BadRequest(result.Error);
@@ -81,10 +82,11 @@
         }
 
         [HttpDelete]
+        [Route(Id)]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult> Delete(DeleteRequestModel input)
+        public async Task<ActionResult> Delete(string id)
         {
-            var result = await this.neighborhoodsService.DeleteAsync(input.Id);
+            var result = await this.neighborhoodsService.DeleteAsync(id);
             if (result.Failure)
             {
                 return BadRequest(result.Error);
@@ -92,5 +94,11 @@
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route(nameof(CheckName))]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<bool> CheckName([FromQuery] string cityId, string name)
+            => await this.neighborhoodsService.CheckName(cityId, name);
     }
 }

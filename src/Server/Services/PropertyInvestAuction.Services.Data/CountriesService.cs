@@ -8,7 +8,9 @@
 
     using PropertyInvestAuction.Data.Common.Repositories;
     using PropertyInvestAuction.Data.Models;
-    using PropertyInvestAuction.Services.Mapping;
+    using Services.Mapping;
+
+    using static Common.ErrorMessages;
 
     public class CountriesService : ICountriesService
     {
@@ -19,12 +21,21 @@
             this.countryRepo = coutryRepo;
         }
 
-        public async Task<bool> CheckIfExists(string id)
+        public async Task<bool> CheckIfExistsAsync(string id)
             => await this.countryRepo.AllAsNoTracking()
             .AnyAsync(c => c.Id == id);
 
+        public async Task<bool> CheckIfNameIsTaken(string name)
+            => await this.countryRepo.AllAsNoTracking()
+            .AnyAsync(c => c.Name == name);
+
         public async Task<string> CreateAsync(string name)
         {
+            if (this.countryRepo.AllAsNoTracking().Any(c => c.Name == name))
+            {
+                return CountryNameTaken;
+            }
+
             var country = new Country
             {
                 Name = name,

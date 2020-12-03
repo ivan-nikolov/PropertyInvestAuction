@@ -1,6 +1,9 @@
 ﻿namespace PropertyInvestAuction.Server.Models.Neighborhoods
 {
-    public class NeighborhoodResponseModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class NeighborhoodResponseModel : IMapFrom<Neighborhood>
     {
         public string Id { get; set; }
 

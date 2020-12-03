@@ -23,6 +23,10 @@
             this.neighborhoodRepo = neighborhoodRepo;
         }
 
+        public async Task<bool> CheckName(string cityId, string name)
+            => await this.neighborhoodRepo.AllAsNoTracking()
+            .AnyAsync(n => n.CityId == cityId && n.Name == name);
+
         public async Task CreateAsync(string name, string cityId)
         {
             var neighborhood = new Neighborhood

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from '../services/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   registerForm: FormGroup;
 
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
       'password': ['', [Validators.required]],
       'confirmPassword': ['', [Validators.required]],
       
-    }, { validator: this.ConfirmPasswordValidator("password", "confirmPassword") })
+    }, { validator: this.confirmPasswordValidator("password", "confirmPassword") })
    }
 
   get email () {
@@ -37,16 +37,13 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls.confirmPassword;
   }
 
-  ngOnInit(): void {
-  }
-
   register(){
     this.userService.register(this.registerForm.value).subscribe(data => {
       this.router.navigateByUrl('/login');
     })
   }
 
-  ConfirmPasswordValidator(controlName: string, matchingControlName: string) {
+  confirmPasswordValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       let control = formGroup.controls[controlName];
       let matchingControl = formGroup.controls[matchingControlName]

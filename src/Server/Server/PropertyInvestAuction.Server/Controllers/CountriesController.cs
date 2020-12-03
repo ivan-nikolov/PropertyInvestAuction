@@ -33,7 +33,7 @@
 
             var countryId = await this.countryService.CreateAsync(input.Name);
 
-            return Ok(countryId);
+            return Created(nameof(Create), new { countryId });
         }
 
         [HttpGet]
@@ -44,13 +44,19 @@
             return await this.countryService.GetAllAsync<CountryListModel>();
         }
 
-        [HttpPost]
-        [Route(nameof(Delete))]
+        [HttpDelete]
+        [Route(Id)]
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Delete(string id)
         {
             await this.countryService.DeleteAsync(id);
             return Ok();
         }
+
+        [HttpGet]
+        [Route(nameof(CheckCountryName))]
+        [Authorize]
+        public async Task<ActionResult> CheckCountryName([FromQuery]string name)
+            => Ok(await this.countryService.CheckIfNameIsTaken(name));
     }
 }

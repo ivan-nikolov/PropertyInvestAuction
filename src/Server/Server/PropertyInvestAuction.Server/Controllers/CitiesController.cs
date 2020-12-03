@@ -12,14 +12,17 @@
     using Services.Data;
 
     using static Common.GlobalConstants;
+    using static Common.ErrorMessages;
 
     public class CitiesController : BaseApiController
     {
         private readonly ICitiesService citiesService;
+        private readonly ICountriesService countriesService;
 
-        public CitiesController(ICitiesService citiesService)
+        public CitiesController(ICitiesService citiesService, ICountriesService countriesService)
         {
             this.citiesService = citiesService;
+            this.countriesService = countriesService;
         }
 
         [HttpGet]
@@ -28,8 +31,8 @@
             => await this.citiesService.AllAsync<CityResponseModel>();
 
         [HttpGet]
-        public async Task<IEnumerable<CityResponseModel>> AllByCoutry(string coutryId)
-            => await this.citiesService.GetByCountryIdAsync<CityResponseModel>(coutryId);
+        public async Task<IEnumerable<CityResponseModel>> AllByCoutry(string countryId)
+            => await this.citiesService.GetByCountryIdAsync<CityResponseModel>(countryId);
 
         [HttpPost]
         [Route(nameof(Create))]
@@ -46,6 +49,11 @@
                 return BadRequest(errors);
             }
 
+            if (!await this.countriesService.CheckIfExistsAsync(input.CountryId))
+            {
+                return BadRequest(CountryDoesNotExists);
+            }
+
             var result = await this.citiesService.CreateAsync(input.CountryId, input.Name);
             if (result.Failure)
             {
@@ -56,9 +64,9 @@
         }
 
         [HttpPut]
-        [Route(nameof(Edit))]
+        [Route(Id)]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult> Edit(EditRequestModel input)
+        public async Task<ActionResult> Edit(string id, EditRequestModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -70,7 +78,7 @@
                 return BadRequest(errors);
             }
 
-            var result = await this.citiesService.EditAsync(input.Id, input.Name);
+            var result = await this.citiesService.EditAsync(id, input.Name);
             if (result.Failure)
             {
                 return BadRequest(result.Error);
@@ -79,12 +87,12 @@
             return Ok();
         }
 
-        [HttpPost]
-        [Route(nameof(Delete))]
+        [HttpDelete]
+        [Route(Id)]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult> Delete(DeleteRequestModel input)
+        public async Task<ActionResult> Delete(string id)
         {
-            var result = await this.citiesService.DeleteAsync(input.Id);
+            var result = await this.citiesService.DeleteAsync(id);
             if (result.Failure)
             {
                 return BadRequest(result.Error);
@@ -92,5 +100,11 @@
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route(nameof(CheckCityName))]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<bool> CheckCityName([FromQuery]string countryId, string name)
+            => await this.citiesService.CheckIfNameIsTaken(countryId, name);
     }
 }

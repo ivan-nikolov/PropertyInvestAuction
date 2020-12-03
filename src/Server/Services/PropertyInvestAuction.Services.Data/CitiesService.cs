@@ -31,8 +31,17 @@
             => (await this.cityRepo.AllAsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == id)) != null;
 
+        public async Task<bool> CheckIfNameIsTaken(string countryId, string name)
+            => await this.cityRepo.AllAsNoTracking()
+            .AnyAsync(c => c.Name == name && c.CountryId == countryId);
+
         public async Task<Result> CreateAsync(string countryId, string name)
         {
+            if (this.cityRepo.AllAsNoTracking().Any(c => c.Name == name && c.CountryId == countryId))
+            {
+                return CityNameTaken;
+            }
+
             var city = new City
             {
                 Name = name,

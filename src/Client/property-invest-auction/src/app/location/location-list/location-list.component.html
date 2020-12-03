@@ -1,27 +1,31 @@
+<h1>Locations</h1>
+<button mat-raised-button (click)="openDialog()">Add Location</button>
 <mat-accordion>
     <mat-expansion-panel *ngFor="let country of countries" hideToggle (opened)="loadCities(country.id)">
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title class="title">
           {{country.name}}
         </mat-panel-title>
+        
       </mat-expansion-panel-header>
 
       <ng-container *ngIf="country.cities">
+          <h4>Cities</h4>
           <mat-accordion>
               <mat-expansion-panel *ngFor="let city of country.cities" hideToggle (opened)="loadNeighborhoods(city.id, country.id)">
                 
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title class="title">
                        {{city.name}}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 
                 <ng-container *ngIf="city.neighborhoods">
+                  <h4>Neighborhoods</h4>
                     <mat-accordion>
-                        
                       <mat-expansion-panel *ngFor="let neighborhood of city.neighborhoods" hideToggle>
                           <mat-expansion-panel-header>
-                              <mat-panel-title>
+                              <mat-panel-title class="title">
                                   {{neighborhood.name}}
                               </mat-panel-title>
                           </mat-expansion-panel-header>

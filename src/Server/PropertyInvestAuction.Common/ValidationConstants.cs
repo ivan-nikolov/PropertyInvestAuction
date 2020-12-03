@@ -25,7 +25,7 @@
         public const int MessageContentMinLength = 10;
         public const int MessageContentMaxLength = 2500;
 
-        public const int NeighborhoodNameMinLength = 10;
+        public const int NeighborhoodNameMinLength = 2;
         public const int NeighborhoodNameMaxLength = 50;
 
         public const string OfferStartingBidPrice = "0.0";

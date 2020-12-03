@@ -5,7 +5,7 @@
     using static Common.ValidationMessages;
     using static Common.ValidationConstants;
 
-    public class CreateRequestModel
+    public class NeighborhoodCreateRequestModel
     {
         [Required]
         [StringLength(NeighborhoodNameMaxLength, MinimumLength = NeighborhoodNameMinLength, ErrorMessage = NeighborhoodNameLengthErrorMessage)]

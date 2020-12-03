@@ -6,5 +6,6 @@
     [Route("[controller]")]
     public abstract class BaseApiController : ControllerBase
     {
+        protected const string Id = "{Id}";
     }
 }

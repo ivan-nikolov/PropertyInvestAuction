@@ -22,5 +22,7 @@
         Task<Result> DeleteAsync(string id);
 
         Task<bool> CheckIfExistsAsync(string id);
+
+        Task<bool> CheckIfNameIsTaken(string coutryId, string name);
     }
 }

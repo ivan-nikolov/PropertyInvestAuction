@@ -37,7 +37,7 @@ export class UserListComponent implements AfterViewInit {
                 })
             )
             .subscribe(res => {
-              this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.input.nativeElement.value);
+              this.loadUsers(0, this.paginator.pageSize, this.input.nativeElement.value);
             });
 
     this.loadUsers(0, 5, '');
@@ -46,8 +46,8 @@ export class UserListComponent implements AfterViewInit {
 
    loadUsers(pageIndex: number, pageSize: number, query: string){
     this.userService.all(pageIndex, pageSize, query).subscribe(data => {
+      this.paginator.length = data.length;
       this.dataSource = new MatTableDataSource<User>(data);
-      console.log(data);
     });
    }
 

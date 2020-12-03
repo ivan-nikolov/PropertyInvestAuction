@@ -17,6 +17,8 @@
 
         Task<T> GetByIdAsync<T>(string id);
 
-        Task<bool> CheckIfExists(string id);
+        Task<bool> CheckIfExistsAsync(string id);
+
+        Task<bool> CheckIfNameIsTaken(string name);
     }
 }

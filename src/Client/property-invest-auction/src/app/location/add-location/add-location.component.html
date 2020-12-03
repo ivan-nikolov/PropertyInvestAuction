@@ -1,0 +1,91 @@
+<div class="add-location-wrapper">
+    <mat-tab-group>
+        <mat-tab label="Add Country">
+            <h3>Add Country</h3>
+            <form [formGroup]="countryForm" #formDirectirve="ngForm" (ngSubmit)="addCountry(formDirectirve)">
+                <mat-form-field appearance="standard" >
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" placeholder="Country Name" formControlName="name">
+                    <mat-error *ngIf="controls.countryName().errors?.minlength">Name must by between 4 and 50 characters!</mat-error>
+                    <mat-error *ngIf="controls.countryName().errors?.required">Country name is required!</mat-error>
+                    <mat-error *ngIf="controls.countryName().errors?.nameTaken">Country name is already taken!</mat-error>
+                  </mat-form-field>
+                  <button mat-stroked-button [disabled]="!countryForm.valid" type="submit">Create</button>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Add City">
+          <h3>Add City</h3>
+           <form [formGroup]="cityForm" #formDirectirve="ngForm" (ngSubmit)="addCity(formDirectirve)">
+            <mat-form-field appearance="standard">
+              <mat-label>Country</mat-label>
+              <mat-select [formControl]="controls.countrySelect()">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let country of countries"  [value]="country.id">
+                  {{country.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="controls.countrySelect()">Please choose a country!</mat-error>
+            </mat-form-field>
+            
+            <ng-container *ngIf="controls.countrySelect().value">
+              <mat-form-field appearance="standard" >
+                <mat-label>City Name</mat-label>
+                <input matInput type="text" placeholder="City Name" formControlName="name">
+                <mat-error *ngIf="controls.cityName().errors?.minlength">Name must by between 2 and 50 characters!</mat-error>
+                <mat-error *ngIf="controls.cityName().errors?.required">City name is required!</mat-error>
+                <mat-error *ngIf="controls.cityName().errors?.nameTaken">City name is already taken!</mat-error>
+              </mat-form-field>
+            </ng-container>
+              <button mat-stroked-button [disabled]="!cityForm.valid" type="submit">Create</button>
+        </form>
+        </mat-tab>
+
+        <mat-tab label="Add Neighborhood">
+          <h3>Add Neighborhood</h3>
+
+          <form [formGroup]="neighborhoodForm" #formDirectirve="ngForm" (ngSubmit)="addNeighborhood(formDirectirve)">
+            <mat-form-field appearance="standard">
+              <mat-label>Country</mat-label>
+              <mat-select [formControl]="controls.countryId()" (selectionChange)="loadCities(controls.countryId().value)">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let country of countries" [value]="country.id">
+                  {{country.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="controls.countryId()">Please choose a country!</mat-error>
+            </mat-form-field>
+            
+            <ng-container *ngIf="controls.countryId().value">
+              <mat-form-field appearance="standard" >
+                <mat-label>City Name</mat-label>
+                <mat-select matInput type="text" placeholder="City Name" formControlName="cityId">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let city of cities"  [value]="city.id">
+                    {{city.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="controls.cityName().errors?.required">Please choose a city!</mat-error>
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="controls.cityId().value">
+              <mat-form-field appearance="standard" >
+                <mat-label>Neighborhood Name</mat-label>
+                <input matInput type="text" placeholder="Neighborhood Name" formControlName="name">
+                <mat-error *ngIf="controls.neighborhoodName().errors?.minlength">Name must by between 2 and 50 characters!</mat-error>
+                <mat-error *ngIf="controls.neighborhoodName().errors?.required">Neighborhood name is required!</mat-error>
+                <mat-error *ngIf="controls.neighborhoodName().errors?.nameTaken">Neighborhood name is already taken!</mat-error>
+              </mat-form-field>
+            </ng-container>
+            <button mat-stroked-button [disabled]="!neighborhoodForm.valid" type="submit">Create</button>
+        </form>
+        </mat-tab>
+
+      </mat-tab-group>
+      
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+      </div>
+</div>

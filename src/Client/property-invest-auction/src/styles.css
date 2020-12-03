@@ -6,5 +6,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Forms global styles */
 
 .mat-app-background {
-    background-color: #f5f7de;
+    margin: 0 auto;
+    max-width: 95%;
+}
+
+.mat-h1, .mat-headline, .mat-typography h1 {
+    margin-top: 2rem;
+    font-size: 50px !important;
+    font-weight: 700 !important;
+    color: #454444de !important;
+}
+
+.mat-h2, .mat-headline, .mat-typography h2 {
+    margin-top: 2rem;
+    font-size: 40px !important;
+    font-weight: 700 !important;
+    color: #454444de !important;
+}
+
+.mat-h3, .mat-headline, .mat-typography h3 {
+    margin-top: 2rem;
+    font-size: 40px !important;
+    font-weight: 700 !important;
+    color: #454444de !important;
+}
+
+.router-outlet-wrapper {
+    max-width: 90%;
+    margin: 0 auto;
 }

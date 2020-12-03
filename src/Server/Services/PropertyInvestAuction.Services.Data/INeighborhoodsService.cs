@@ -15,5 +15,7 @@
         Task<Result> EditAsync(string id, string name);
 
         Task<Result> DeleteAsync(string id);
+
+        Task<bool> CheckName(string cityId, string name);
     }
 }
