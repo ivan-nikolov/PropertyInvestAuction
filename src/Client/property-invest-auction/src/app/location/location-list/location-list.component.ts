@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLocationComponent } from '../add-location/add-location.component';
+import { EditCountryComponent } from '../edit-country/edit-country.component';
+import { City } from '../models/city';
 import { Country } from '../models/country';
+import { Neighborhood } from '../models/neighborhood';
 import { LocationService } from '../services/location.service';
+import { EditDialogData } from '../models/edit-dialg-data'
  
-const COUNTRIES: Country[] = [
-  {id: 'bg', name: 'Bulgaria', cities: []},
-  {id: 'de', name: 'Germany', cities: []},
-  {id: 'ro', name: 'Romania', cities: []},
-]
+
 
 @Component({
   selector: 'app-location-list',
@@ -25,8 +25,8 @@ export class LocationListComponent {
     
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddLocationComponent, {
+  openAddDialog(): void {
+    const addDialogRef = this.dialog.open(AddLocationComponent, {
       width: '700px',
       height: '600px',
       data: {
@@ -34,7 +34,7 @@ export class LocationListComponent {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    addDialogRef.afterClosed().subscribe(result => {
       this.loadCountries();
     });
   }
@@ -47,7 +47,6 @@ export class LocationListComponent {
 
   loadCities(countryId: string){
     this.locationService.loadCitiesByCountryId(countryId).subscribe(data => {
-      console.log(data);
       this.countries.filter(c => c.id === countryId)[0].cities = data;
     })   
   
@@ -64,4 +63,83 @@ export class LocationListComponent {
       }
     )
   }
+
+  editCountry(id: string, name: string) {
+    const editCountryDialog = this.operEditDialog(name, 'country');
+
+    editCountryDialog.afterClosed().subscribe(
+      res => {
+        if(res && res.valid){
+          this.locationService.editCountry(id, res.name).subscribe(
+            res => {
+              this.loadCountries();
+            })
+        }
+      }
+    )
+  }
+
+  deleteCountry(id: string) {
+    this.locationService.deleteCountry(id).subscribe(
+      res => this.loadCountries()
+    )
+  }
+
+  editCity(city: City) {
+    const editCityDialog = this.operEditDialog(city.name, 'city');
+
+    editCityDialog.afterClosed().subscribe(
+      res => {
+        if(res && res.valid){
+          this.locationService.editCity(city.id, res.name).subscribe(
+            res => {
+              this.loadCities(city.countryId);
+            })
+        }
+      }
+    )
+  }
+
+  deleteCity(city: City) {
+    this.locationService.deleteCity(city.id).subscribe(
+      res => this.loadCities(city.countryId)
+    )
+  }
+
+  editNeighborhood(id: string, name: string, city: City) {
+    const editDialog = this.operEditDialog(name, 'neighborhood');
+    editDialog.afterClosed().subscribe(
+      res => {
+        console.log(res);
+        if(res && res.valid){
+          this.locationService.editNeighborhood(id, res.name).subscribe(
+            res => {
+              this.loadNeighborhoods(city.id, city.countryId);
+            })
+        }
+      }
+    )
+  }
+
+  deleteNeighborhood(neighborhood: Neighborhood, countryId: string) {
+    this.locationService.deleteNeighborhood(neighborhood.id).subscribe(
+      res => this.loadNeighborhoods(neighborhood.cityId, countryId)
+    )
+  }
+
+  private operEditDialog(name: string, control: string) {
+
+    const data: EditDialogData = {
+      control: control,
+      name: name,
+      valid: false
+    }
+
+    return this.dialog.open(EditCountryComponent, {
+      width: '500px',
+      height: '300px',
+      data : data
+    });
+  }
+
 }

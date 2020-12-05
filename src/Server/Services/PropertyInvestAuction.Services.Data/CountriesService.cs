@@ -11,14 +11,17 @@
     using Services.Mapping;
 
     using static Common.ErrorMessages;
+    using PropertyInvestAuction.Services.Models;
 
     public class CountriesService : ICountriesService
     {
         private readonly IDeletableEntityRepository<Country> countryRepo;
+        private readonly ICitiesService citiesService;
 
-        public CountriesService(IDeletableEntityRepository<Country> coutryRepo)
+        public CountriesService(IDeletableEntityRepository<Country> coutryRepo, ICitiesService citiesService)
         {
             this.countryRepo = coutryRepo;
+            this.citiesService = citiesService;
         }
 
         public async Task<bool> CheckIfExistsAsync(string id)
@@ -47,29 +50,34 @@
             return country.Id;
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<Result> DeleteAsync(string id)
         {
             var country = await this.countryRepo.GetByIdAsync(id);
             if (country == null)
             {
-                return;
+                return CountryDoesNotExists;
             }
 
             this.countryRepo.Delete(country);
+            await this.citiesService.DeleteByCountryId(id);
             await this.countryRepo.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task EditAsync(string id, string name)
+        public async Task<Result> EditAsync(string id, string name)
         {
             var country = await this.countryRepo.GetByIdAsync(id);
             if (country == null)
             {
-                return;
+                return CountryDoesNotExists;
             }
 
             country.Name = name;
             this.countryRepo.Update(country);
             await this.countryRepo.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync<T>()

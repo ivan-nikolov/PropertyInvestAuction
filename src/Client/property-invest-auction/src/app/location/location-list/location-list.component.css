@@ -18,10 +18,14 @@
     font-weight: 500;
   }
 
-  button {
+  .add-btn {
     margin: 30px;
   }
   
   .action {
     display: flex;
+  }
+
+  .mat-action-row {
+    padding: 0px;
   }

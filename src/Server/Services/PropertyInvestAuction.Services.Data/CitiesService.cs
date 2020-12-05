@@ -16,10 +16,12 @@
     public class CitiesService : ICitiesService
     {
         private readonly IDeletableEntityRepository<City> cityRepo;
+        private readonly INeighborhoodsService neighborhoodsService;
 
-        public CitiesService(IDeletableEntityRepository<City> cityRepo)
+        public CitiesService(IDeletableEntityRepository<City> cityRepo, INeighborhoodsService neighborhoodsService)
         {
             this.cityRepo = cityRepo;
+            this.neighborhoodsService = neighborhoodsService;
         }
 
         public async Task<IEnumerable<T>> AllAsync<T>()
@@ -62,6 +64,9 @@
             }
 
             this.cityRepo.Delete(city);
+
+            await this.neighborhoodsService.DeleteByCityIdAsync(id);
+
             await this.cityRepo.SaveChangesAsync();
 
             return true;
@@ -93,5 +98,17 @@
             .Where(c => c.Id == id)
             .To<T>()
             .FirstOrDefaultAsync();
+
+        public async Task DeleteByCountryId(string countryId)
+        {
+            var cities = this.cityRepo.All().Where(c => c.CountryId == countryId);
+
+            foreach (var city in cities)
+            {
+                this.cityRepo.Delete(city);
+            }
+
+            await this.cityRepo.SaveChangesAsync();
+        }
     }
 }

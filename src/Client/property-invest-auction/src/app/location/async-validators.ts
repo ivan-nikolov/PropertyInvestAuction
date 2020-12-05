@@ -18,7 +18,7 @@ export const countryAsyncValidator =
   export const cityAsyncValidator = 
   (locationService: LocationService, time: number = 500) => {
     return (input: FormControl) => {
-      const countryId = input?.parent?.controls['countrySelect']?.value;
+      const countryId = input?.parent?.get('countryId')?.value;
       return timer(time).pipe(
         switchMap(() =>
         locationService.checkCityName(countryId, input.value)

@@ -4,14 +4,15 @@
     using System.Threading.Tasks;
 
     using PropertyInvestAuction.Common.ServiceTypes;
+    using PropertyInvestAuction.Services.Models;
 
     public interface ICountriesService : ITransient
     {
         Task<string> CreateAsync(string name);
 
-        Task DeleteAsync(string id);
+        Task<Result> DeleteAsync(string id);
 
-        Task EditAsync(string id, string name);
+        Task<Result> EditAsync(string id, string name);
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 

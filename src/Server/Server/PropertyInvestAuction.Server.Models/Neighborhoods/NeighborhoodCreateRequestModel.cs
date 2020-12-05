@@ -8,7 +8,7 @@
     public class NeighborhoodCreateRequestModel
     {
         [Required]
-        [StringLength(NeighborhoodNameMaxLength, MinimumLength = NeighborhoodNameMinLength, ErrorMessage = NeighborhoodNameLengthErrorMessage)]
+        [StringLength(NeighborhoodNameMaxLength, MinimumLength = NeighborhoodNameMinLength, ErrorMessage = NameLenghtErroMessage)]
         public string Name { get; set; }
 
         public string CityId { get; set; }

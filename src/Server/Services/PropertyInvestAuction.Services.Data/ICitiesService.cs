@@ -24,5 +24,7 @@
         Task<bool> CheckIfExistsAsync(string id);
 
         Task<bool> CheckIfNameIsTaken(string coutryId, string name);
+
+        Task DeleteByCountryId(string countryId);
     }
 }

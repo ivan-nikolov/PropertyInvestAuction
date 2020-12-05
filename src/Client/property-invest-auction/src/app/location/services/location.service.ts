@@ -33,15 +33,15 @@ export class LocationService {
   }
 
   addCountry(name: string) : Observable<any> {
-    return this.http.post(apiUrl + '/countries/create', name);
+    return this.http.post(apiUrl + '/countries', name);
   }
 
   addCity(data: CityInput) : Observable<any> {
-    return this.http.post(apiUrl + '/cities/create', data);
+    return this.http.post(apiUrl + '/cities', data);
   }
 
   addNeighborhood(data: NeighborhoodInput) : Observable<any> {
-    return this.http.post(apiUrl + '/neighborhoods/create', data);
+    return this.http.post(apiUrl + '/neighborhoods', data);
   }
 
   checkCountryName(countryName: string) : Observable<boolean> {
@@ -62,5 +62,29 @@ export class LocationService {
     const params = new HttpParams({fromObject: { cityId: cityId, name: name}});
 
     return this.http.get<boolean>(apiUrl + '/neighborhoods/checkName', {params: params});
+  }
+
+  editCountry(id: string, name: string) : Observable<any> {
+    return this.http.put(apiUrl + `/countries/${id}`, { name });
+  }
+
+  deleteCountry(id: string) : Observable<any> {
+    return this.http.delete(apiUrl + `/countries/${id}`);
+  }
+
+  editCity(id: string, name: string) : Observable<any> {
+    return this.http.put(apiUrl + `/cities/${id}`, { name });
+  }
+  
+  deleteCity(id: string) : Observable<any> {
+    return this.http.delete(apiUrl + `/cities/${id}`);
+  }
+
+  editNeighborhood(id: string, name: string) : Observable<any> {
+    return this.http.put(apiUrl + `/Neighborhoods/${id}`, { name });
+  }
+  
+  deleteNeighborhood(id: string) : Observable<any> {
+    return this.http.delete(apiUrl + `/Neighborhoods/${id}`);
   }
 }

@@ -7,7 +7,7 @@
 
     public class CreateCityRequestModel
     {
-        [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength, ErrorMessage = CityNameLengthErrorMessage)]
+        [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength, ErrorMessage = NameLenghtErroMessage)]
         public string Name { get; set; }
 
         public string CountryId { get; set; }

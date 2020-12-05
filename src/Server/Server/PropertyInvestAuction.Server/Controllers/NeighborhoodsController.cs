@@ -37,13 +37,12 @@
                 return this.BadRequest(CityDoesNotExists);
             }
 
-            var neighborhoods = await this.neighborhoodsService.GetByCItyIdAsync<NeighborhoodResponseModel>(cityId);
+            var neighborhoods = await this.neighborhoodsService.GetByCityIdAsync<NeighborhoodResponseModel>(cityId);
 
             return Ok(neighborhoods);
         }
 
         [HttpPost]
-        [Route(nameof(Create))]
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(NeighborhoodCreateRequestModel input)
         {

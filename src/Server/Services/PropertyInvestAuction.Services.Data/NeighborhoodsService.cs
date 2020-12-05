@@ -66,10 +66,22 @@
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetByCItyIdAsync<T>(string cityId)
+        public async Task<IEnumerable<T>> GetByCityIdAsync<T>(string cityId)
             => await this.neighborhoodRepo.AllAsNoTracking()
             .Where(n => n.CityId == cityId)
             .To<T>()
             .ToListAsync();
+
+        public async Task DeleteByCityIdAsync(string cityId)
+        {
+            var neighborhoods = this.neighborhoodRepo.All().Where(n => n.CityId == cityId);
+
+            foreach (var neighborhood in neighborhoods)
+            {
+                this.neighborhoodRepo.Delete(neighborhood);
+            }
+
+            await this.neighborhoodRepo.SaveChangesAsync();
+        }
     }
 }

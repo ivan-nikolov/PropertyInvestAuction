@@ -1,13 +1,16 @@
 <h1>Locations</h1>
-<button mat-raised-button (click)="openDialog()">Add Location</button>
+<button mat-raised-button class="add-btn" (click)="openAddDialog()">Add Location</button>
 <mat-accordion>
     <mat-expansion-panel *ngFor="let country of countries" hideToggle (opened)="loadCities(country.id)">
       <mat-expansion-panel-header>
         <mat-panel-title class="title">
           {{country.name}}
         </mat-panel-title>
-        
       </mat-expansion-panel-header>
+          <mat-action-row>
+            <button mat-button color="primary" (click)="editCountry(country.id, country.name)">Edit</button>
+            <button mat-button color="warn" (click)="deleteCountry(country.id)">Delete</button>
+          </mat-action-row>
 
       <ng-container *ngIf="country.cities">
           <h4>Cities</h4>
@@ -19,7 +22,13 @@
                        {{city.name}}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                
+
+                <mat-action-row>
+                  <button mat-button color="primary" (click)="editCity(city)">Edit</button>
+                  <button mat-button color="warn" (click)="deleteCity(city)">Delete</button>
+                </mat-action-row>
+
+
                 <ng-container *ngIf="city.neighborhoods">
                   <h4>Neighborhoods</h4>
                     <mat-accordion>
@@ -30,6 +39,11 @@
                               </mat-panel-title>
                           </mat-expansion-panel-header>
                           
+                <mat-action-row>
+                  <button mat-button color="primary" (click)="editNeighborhood(neighborhood.id, neighborhood.name, city)">Edit</button>
+                  <button mat-button color="warn" (click)="deleteNeighborhood(neighborhood, country.id)">Delete</button>
+                </mat-action-row>
+
                       </mat-expansion-panel>
                   </mat-accordion>
                 </ng-container>
@@ -42,5 +56,4 @@
     </mat-expansion-panel>
     
   </mat-accordion>
-  
   

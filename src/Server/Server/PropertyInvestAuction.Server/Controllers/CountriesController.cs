@@ -10,7 +10,9 @@
     using PropertyInvestAuction.Server.Models.Country;
     using PropertyInvestAuction.Services.Data;
 
-    using static PropertyInvestAuction.Common.GlobalConstants;
+    using static Common.GlobalConstants;
+    using static Common.ErrorMessages;
+    using System.Linq;
 
     public class CountriesController : BaseApiController
     {
@@ -22,7 +24,6 @@
         }
 
         [HttpPost]
-        [Route(nameof(Create))]
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(CreateInputModel input)
         {
@@ -49,7 +50,26 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Delete(string id)
         {
-            await this.countryService.DeleteAsync(id);
+            var result = await this.countryService.DeleteAsync(id);
+            if (result.Failure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route(Id)]
+        [Authorize(Roles = AdministratorRoleName)]
+        public async Task<ActionResult> Edit(string id, CountryEditModel input)
+        {
+            var result = await this.countryService.EditAsync(id, input.Name);
+            if (result.Failure)
+            {
+                return BadRequest(result.Error);
+            }
+
             return Ok();
         }
 

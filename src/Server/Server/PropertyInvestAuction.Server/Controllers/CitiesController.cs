@@ -35,7 +35,6 @@
             => await this.citiesService.GetByCountryIdAsync<CityResponseModel>(countryId);
 
         [HttpPost]
-        [Route(nameof(Create))]
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(CreateCityRequestModel input)
         {
