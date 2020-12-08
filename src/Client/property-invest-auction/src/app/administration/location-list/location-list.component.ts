@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLocationComponent } from '../add-location/add-location.component';
-import { EditCountryComponent } from '../edit-country/edit-country.component';
+import { EditLocationComponent } from '../edit-location/edit-location.component';
 import { City } from '../models/city';
 import { Country } from '../models/country';
 import { Neighborhood } from '../models/neighborhood';
@@ -135,7 +135,7 @@ export class LocationListComponent {
       valid: false
     }
 
-    return this.dialog.open(EditCountryComponent, {
+    return this.dialog.open(EditLocationComponent, {
       width: '500px',
       height: '300px',
       data : data

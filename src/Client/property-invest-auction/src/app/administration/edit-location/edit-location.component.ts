@@ -9,10 +9,10 @@ interface StringMap { [key: string]: any; };
 
 @Component({
   selector: 'app-edit-country',
-  templateUrl: './edit-country.component.html',
-  styleUrls: ['./edit-country.component.css']
+  templateUrl: './edit-location.component.html',
+  styleUrls: ['./edit-location.component.css']
 })
-export class EditCountryComponent {
+export class EditLocationComponent {
 
   form: FormGroup;
 
@@ -24,7 +24,7 @@ export class EditCountryComponent {
   }
 
   constructor(
-    public dialogRef: MatDialogRef<EditCountryComponent>,
+    public dialogRef: MatDialogRef<EditLocationComponent>,
     private fb: FormBuilder,
     private locationService: LocationService,
     @Inject(MAT_DIALOG_DATA) public data: EditDialogData) {
