@@ -9,7 +9,10 @@
         public const string CityDoesNotExists = "Citi does not exists.";
         public const string NeighborhoodDoesNotExists = "Neighborhood does not exists.";
 
-        public const string CityNameTaken = "City already exists";
-        public const string CountryNameTaken = "Country already exists";
+        public const string CityNameTaken = "City already exists.";
+        public const string CountryNameTaken = "Country already exists.";
+
+        public const string CategoryNameTaken = "Category already exists.";
+        public const string CategoryDoesNotExists = "Category does not exists.";
     }
 }
