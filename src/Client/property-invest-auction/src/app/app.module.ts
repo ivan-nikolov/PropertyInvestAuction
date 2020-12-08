@@ -15,8 +15,9 @@ import { UserAuthGuard } from './user/services/userAuth.guard';
 import { JwtService } from './user/services/jwt.service';
 import { RoleGuard } from './user/services/role.guard';
 import { TokenInterceptorService } from './user/services/token-interceptor.service';
-import { AdministrationModule } from './administration/administration.module'
-import { LocationService } from './administration/services/location.service'
+import { AdministrationModule } from './administration/administration.module';
+import { LocationService } from './administration/services/location.service';
+import { CategoryService } from './administration/services/category.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LocationService } from './administration/services/location.service'
     UserAuthGuard,
     LocationService,
     JwtService,
+    CategoryService,
     RoleGuard,
     {
       provide: HTTP_INTERCEPTORS,

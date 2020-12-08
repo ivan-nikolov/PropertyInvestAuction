@@ -82,9 +82,9 @@
         }
 
         [HttpGet]
-        [Route(nameof(CheckIfNameTaken))]
+        [Route(nameof(CheckIfNameIsTaken))]
         [Authorize(Roles = AdministratorRoleName)]
-        public async Task<ActionResult<bool>> CheckIfNameTaken(string name)
+        public async Task<ActionResult<bool>> CheckIfNameIsTaken([FromQuery]string name)
             => Ok(await this.categoriesService.CheckIfNameIsTaken(name));
     }
 }
