@@ -7,6 +7,7 @@ import { RegisterComponent } from './user/register/register.component';
 import { RoleGuard } from './user/services/role.guard';
 import { UserAuthGuard } from './user/services/userAuth.guard';
 import { UserListComponent } from './user/user-list/user-list.component';
+import { CategoriesListComponent } from './administration/categories-list/categories-list.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,15 @@ const routes: Routes = [
   {
     path: 'location',
     component: LocationListComponent,
+    canActivate: [UserAuthGuard, RoleGuard],
+    data: {
+      isAuthenticated: true,
+      expectedRole: 'Administrator'
+    }
+  },
+  {
+    path: 'categories',
+    component: CategoriesListComponent,
     canActivate: [UserAuthGuard, RoleGuard],
     data: {
       isAuthenticated: true,

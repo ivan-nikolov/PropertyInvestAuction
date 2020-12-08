@@ -5,11 +5,12 @@ import { EditLocationComponent } from './edit-location/edit-location.component';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CategoriesListComponent } from './categories-list/categories-list.component';
 
 
 
 @NgModule({
-  declarations: [LocationListComponent, EditLocationComponent, AddLocationComponent],
+  declarations: [LocationListComponent, EditLocationComponent, AddLocationComponent, CategoriesListComponent],
   imports: [
     CommonModule,
     MaterialModule,
