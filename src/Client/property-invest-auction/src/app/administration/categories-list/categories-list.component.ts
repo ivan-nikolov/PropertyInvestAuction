@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../models/category';
 import { CategoryService } from '../services/category.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -15,14 +17,22 @@ export class CategoriesListComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
   create() : void {
-    console.log('create');
+    const addDialogRef = this.dialog.open(AddCategoryComponent, {
+      width: '700px',
+      height: '600px',
+    });
+
+    addDialogRef.afterClosed().subscribe(result => {
+      this.loadCategories();
+    });
   }
 
   edit(category: Category) {
@@ -36,7 +46,8 @@ export class CategoriesListComponent implements OnInit {
         this.openSnackBar('Category is Deleted.');
       },
       err => {
-        this.openSnackBar(err.error.message, 0);
+        console.log(err.error);
+        this.openSnackBar(err.error, 0);
       }
     )
   }

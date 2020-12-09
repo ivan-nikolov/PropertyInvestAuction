@@ -11,6 +11,7 @@
 
     using static PropertyInvestAuction.Common.GlobalConstants;
     using static PropertyInvestAuction.Common.ErrorMessages;
+    using System.Linq;
 
     public class CategoriesController : BaseApiController
     {
@@ -43,6 +44,11 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Edit(string id, CategoryEditModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.ValidationProblem(this.ModelState);
+            }
+
             var result = await this.categoriesService.EditAsync(id, input.Name);
             if (result.Failure)
             {
@@ -70,6 +76,11 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(CategoryCreateModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.ValidationProblem(this.ModelState);
+            }
+
             var isNameTaken = await this.categoriesService.CheckIfNameIsTaken(input.Name);
             if (isNameTaken)
             {

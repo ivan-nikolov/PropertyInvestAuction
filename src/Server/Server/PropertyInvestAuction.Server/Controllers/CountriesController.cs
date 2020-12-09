@@ -27,9 +27,9 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Create(CreateInputModel input)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest("Invalid country name");
+                this.ValidationProblem(this.ModelState);
             }
 
             var countryId = await this.countryService.CreateAsync(input.Name);
@@ -64,6 +64,11 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Edit(string id, CountryEditModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.ValidationProblem(this.ModelState);
+            }
+
             var result = await this.countryService.EditAsync(id, input.Name);
             if (result.Failure)
             {

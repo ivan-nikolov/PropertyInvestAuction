@@ -30,7 +30,7 @@
         [HttpGet]
         [Route(nameof(GetByCityId))]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<NeighborhoodResponseModel>>> GetByCityId([FromQuery]string cityId)
+        public async Task<ActionResult<IEnumerable<NeighborhoodResponseModel>>> GetByCityId([FromQuery] string cityId)
         {
             if (!await this.citiesService.CheckIfExistsAsync(cityId))
             {
@@ -48,13 +48,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var errors = new List<string>();
-                foreach (var value in this.ModelState.Values)
-                {
-                    errors.AddRange(value.Errors.Select(e => e.ErrorMessage));
-                }
-
-                return BadRequest(errors);
+                this.ValidationProblem(this.ModelState);
             }
 
             if (!await this.citiesService.CheckIfExistsAsync(input.CityId))
@@ -71,6 +65,11 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<ActionResult> Edit(string id, NeighborhoodEditRequestModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.ValidationProblem(this.ModelState);
+            }
+
             var result = await this.neighborhoodsService.EditAsync(id, input.Name);
             if (result.Failure)
             {

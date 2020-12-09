@@ -40,12 +40,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var errors = new List<string>();
-                foreach (var value in this.ModelState.Values)
-                {
-                    errors.AddRange(value.Errors.Select(e => e.ErrorMessage));
-                }
-                return BadRequest(errors);
+                this.ValidationProblem(this.ModelState);
             }
 
             if (!await this.countriesService.CheckIfExistsAsync(input.CountryId))
@@ -69,12 +64,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var errors = new List<string>();
-                foreach (var value in this.ModelState.Values)
-                {
-                    errors.AddRange(value.Errors.Select(e => e.ErrorMessage));
-                }
-                return BadRequest(errors);
+                this.ValidationProblem(this.ModelState);
             }
 
             var result = await this.citiesService.EditAsync(id, input.Name);

@@ -21,8 +21,8 @@ export class CategoryService {
     return this.http.get<Category>(`${apiUrl}/categories/${id}`);
   }
 
-  create(name: string) : Observable<any> {
-    return this.http.post(`${apiUrl}/categories`, { name });
+  create(input: {name: string}) : Observable<any> {
+    return this.http.post(`${apiUrl}/categories`, input);
   }
 
   edit(id: string, name: string) : Observable<any> {
