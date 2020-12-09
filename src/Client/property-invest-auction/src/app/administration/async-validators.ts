@@ -2,6 +2,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { timer } from "rxjs";
 import { switchMap, map } from "rxjs/operators";
 import { LocationService } from "./services/location.service";
+import { CategoryService } from './services/category.service';
 
 export const countryAsyncValidator = 
   (locationService: LocationService, time: number = 500) => {
@@ -42,6 +43,18 @@ export const countryAsyncValidator =
          ),
         map(res => {
           console.log(res);
+          return res ? {nameTaken: true} : null
+        })
+      );
+    };
+  };
+
+  export const categoryNameAsyncValidator = 
+  (categoryService: CategoryService, time: number = 500) => {
+    return (input: FormControl) => {
+      return timer(time).pipe(
+        switchMap(() => categoryService.checkName(input.value)),
+        map(res => {
           return res ? {nameTaken: true} : null
         })
       );

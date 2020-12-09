@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryService } from '../services/category.service';
+import { categoryNameAsyncValidator } from '../async-validators';
 
 @Component({
   selector: 'app-add-category',
@@ -39,7 +40,7 @@ export class AddCategoryComponent implements OnInit {
 
   private createCategoryForm() {
     this.categoryForm = this.fb.group({
-      'name': ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
+      'name': ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)], [categoryNameAsyncValidator(this.categoryService)]]
     })
   }
 

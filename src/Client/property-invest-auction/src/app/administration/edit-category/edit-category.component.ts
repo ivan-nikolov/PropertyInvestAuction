@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { categoryNameAsyncValidator } from '../async-validators';
 import { Category } from '../models/category';
 import { CategoryService } from '../services/category.service'
 
@@ -24,7 +25,7 @@ export class EditCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryForm = this.fb.group({
-      'name': [this.data.name, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
+      'name': [this.data.name, [Validators.required, Validators.minLength(4), Validators.maxLength(50)], [categoryNameAsyncValidator(this.categoryService)]]
     })
   }
 
