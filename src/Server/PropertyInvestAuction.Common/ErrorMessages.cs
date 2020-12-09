@@ -3,6 +3,7 @@
     public static class ErrorMessages
     {
         public const string PasswordsDoNotMatch = "Passwords do not match.";
+        public const string InvalidUsernameOrPassword = "Invalid Username or password";
         public const string UserNotFound = "User not found";
 
         public const string CountryDoesNotExists = "Country does not exists.";

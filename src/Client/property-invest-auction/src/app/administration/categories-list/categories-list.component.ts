@@ -44,10 +44,6 @@ export class CategoriesListComponent implements OnInit {
       res => {
         this.loadCategories();
         this.openSnackBar('Category is Deleted.');
-      },
-      err => {
-        console.log(err.error);
-        this.openSnackBar(err.error, 0);
       }
     )
   }

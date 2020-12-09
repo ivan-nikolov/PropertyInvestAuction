@@ -52,7 +52,6 @@ export class UserListComponent implements AfterViewInit {
    }
 
    addToAdmin(userId: string) {
-     console.log(userId);
      this.userService.addToAdmin(userId).subscribe(res => {
       this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.input.nativeElement.value);
      });

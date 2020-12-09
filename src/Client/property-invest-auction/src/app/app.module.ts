@@ -18,6 +18,7 @@ import { TokenInterceptorService } from './user/services/token-interceptor.servi
 import { AdministrationModule } from './administration/administration.module';
 import { LocationService } from './administration/services/location.service';
 import { CategoryService } from './administration/services/category.service';
+import { ErrorInterceptorService } from './core/error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,13 @@ import { CategoryService } from './administration/services/category.service';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

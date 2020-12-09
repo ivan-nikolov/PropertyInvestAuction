@@ -29,9 +29,6 @@ export class AddCategoryComponent implements OnInit {
       res => {
         this.openSnackBar('Category Created');
         this.dialogRef.close();
-      },
-      err => {
-        this.openSnackBar(err.error);
       }
     )
   }

@@ -57,9 +57,6 @@ export class LocationListComponent {
     this.locationService.loadNeighborhoods(cityId).subscribe(
       data => {
         city.neighborhoods = data;
-      },
-      err=> {
-        console.log(err);
       }
     )
   }

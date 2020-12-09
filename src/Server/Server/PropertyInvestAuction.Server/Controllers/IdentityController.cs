@@ -16,7 +16,6 @@
     using static PropertyInvestAuction.Common.GlobalConstants;
     using static PropertyInvestAuction.Common.ErrorMessages;
     using Microsoft.AspNetCore.Authorization;
-    using System.Security.Claims;
 
     public class IdentityController : BaseApiController
     {
@@ -65,15 +64,11 @@
         public async Task<ActionResult<LoginResponseModel>> Login(LoginInputModel input)
         {
             var user = await this.userManager.FindByNameAsync(input.UserName);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, input.Password);
-            if (!passwordValid)
+            if (user == null || !passwordValid)
             {
-                return Unauthorized();
+                return BadRequest(InvalidUsernameOrPassword);
             }
 
             var roles = await this.userManager.GetRolesAsync(user);
