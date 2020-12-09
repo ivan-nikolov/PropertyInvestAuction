@@ -4,6 +4,7 @@ import { CategoryService } from '../services/category.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCategoryComponent } from '../add-category/add-category.component';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -36,7 +37,15 @@ export class CategoriesListComponent implements OnInit {
   }
 
   edit(category: Category) {
-    console.log(category);
+    const editDialogRef = this.dialog.open(EditCategoryComponent, {
+      width: '700px',
+      height: '600px',
+      data: category,
+    });
+
+    editDialogRef.afterClosed().subscribe(result => {
+      this.loadCategories();
+    });
   }
 
   delete(id: string) {

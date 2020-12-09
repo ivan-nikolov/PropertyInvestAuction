@@ -2,45 +2,49 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators'
+import { retry, catchError } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorInterceptorService implements HttpInterceptor {
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private toastService: ToastrService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       retry(1),
       catchError((err: HttpErrorResponse) => {
-        let message = '';
-        if(err.status === 400){
-          message = err.error;
+        let messages: Array<string> = new Array();
+        if (err.status === 400) {
+          if(err.error.errors) {
+            for (const key of Object.keys(err.error.errors)) {
+              messages = messages.concat(err.error.errors[key]);
+            }
+          }
+          else{
+            messages = [err.error];
+          }
         }
-        else if(err.status === 401){
-          message = "Login required.";
+        else if (err.status === 401) {
+          messages = ["Login required."];
         }
-        else if(err.status === 403){
-          message = "You do not have permissions to access this resource."
+        else if (err.status === 403) {
+          messages = ["You do not have permissions to access this resource."];
         }
-        else if(err.status === 404){
-          message = "Not found."
+        else if (err.status === 404) {
+          messages = ["Not found."]
         }
         else {
           alert('Something went wrong.');
         }
 
-        this.openSnackBar(message);
+        messages.forEach(message => {
+          this.toastService.error(message);
+        });
         return throwError(err);
       })
     )
-  }
-
-  private openSnackBar(message: string, time: number = 10000) {
-    this.snackBar.open(message, 'Ok', {
-      duration: time,
-    });
   }
 }

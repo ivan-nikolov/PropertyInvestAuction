@@ -4,14 +4,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [ToolbarComponent],
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [ToolbarComponent]
 })

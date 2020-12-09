@@ -19,6 +19,8 @@ import { AdministrationModule } from './administration/administration.module';
 import { LocationService } from './administration/services/location.service';
 import { CategoryService } from './administration/services/category.service';
 import { ErrorInterceptorService } from './core/error-interceptor.service';
+import { ToastrModule } from 'ngx-toastr'
+
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { ErrorInterceptorService } from './core/error-interceptor.service';
     AdministrationModule,
     CoreModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     UserService,

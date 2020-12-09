@@ -15,7 +15,7 @@ export interface AddLocationData {
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
-  styleUrls: ['./add-location.component.css']
+  styleUrls: ['./add-location.component.css', '../../shared/dialog-form-styles.css']
 })
 export class AddLocationComponent implements OnInit {
 
@@ -55,7 +55,6 @@ export class AddLocationComponent implements OnInit {
   }
 
   loadCities(countryId: string){
-    console.log(this.controls.countryId().value);
     this.locationService.loadCitiesByCountryId(countryId).subscribe(
       res => {
         this.cities = res;

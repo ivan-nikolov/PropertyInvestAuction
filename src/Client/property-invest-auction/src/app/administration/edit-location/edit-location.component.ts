@@ -10,7 +10,7 @@ interface StringMap { [key: string]: any; };
 @Component({
   selector: 'app-edit-country',
   templateUrl: './edit-location.component.html',
-  styleUrls: ['./edit-location.component.css']
+  styleUrls: ['./edit-location.component.css', '../../shared/dialog-form-styles.css']
 })
 export class EditLocationComponent {
 

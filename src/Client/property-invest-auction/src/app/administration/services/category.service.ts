@@ -25,8 +25,9 @@ export class CategoryService {
     return this.http.post(`${apiUrl}/categories`, input);
   }
 
-  edit(id: string, name: string) : Observable<any> {
-    return this.http.put(`${apiUrl}/categories/${id}`, { name })
+  edit(category: Category) : Observable<any> {
+    console.log(category);
+    return this.http.put(`${apiUrl}/categories/${category.id}`, { name: category.name })
   }
 
   delete(id: string) : Observable<any> {
