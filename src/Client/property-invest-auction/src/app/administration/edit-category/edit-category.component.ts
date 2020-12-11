@@ -34,7 +34,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   editCategory(): void {
-    this.categoryService.edit({id: this.data.id, name: this.categoryForm.get('name').value})
+    this.categoryService.edit({id: this.data.id, name: this.categoryForm.get('name')?.value})
     .subscribe(
       res => {
         this.openSnackBar('Category edited');

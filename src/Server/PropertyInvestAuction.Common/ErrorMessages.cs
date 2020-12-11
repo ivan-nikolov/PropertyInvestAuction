@@ -15,5 +15,7 @@
 
         public const string CategoryNameTaken = "Category already exists.";
         public const string CategoryDoesNotExists = "Category does not exists.";
+
+        public const string AddressDoesNotExists = "Address does not exists.";
     }
 }
