@@ -55,8 +55,6 @@
                 return ValidationProblem(this.ModelState);
             }
 
-            var userId = this.User.GetId();
-
             if (!await this.addressesService.CheckIfExistsAsync(input.AddressId))
             {
                 return BadRequest(AddressDoesNotExists);
@@ -67,6 +65,7 @@
                 return BadRequest(CategoryDoesNotExists);
             }
 
+            var userId = this.User.GetId();
             var imageUrls = await this.cloudinaryService.UploadFilesAsync(input.Photos);
             var propertyId = await this.propertiesService.CreateAsync(input.Description, input.AddressId, userId, input.CategoryId, imageUrls);
 

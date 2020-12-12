@@ -10,7 +10,7 @@
     {
         Task<string> CreateAsync(string name, string cityId, string neighborhoodId);
 
-        Task<IEnumerable<T>> GetByCityIdAsync<T>(string cityId);
+        Task<IEnumerable<T>> GetAllAsync<T>(string cityId, string neighborhoodId);
 
         Task<Result> EditAsync(string id, string name);
 

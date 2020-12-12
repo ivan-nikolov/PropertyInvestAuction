@@ -70,9 +70,9 @@
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetByCityIdAsync<T>(string cityId)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(string cityId, string neighborhoodId)
             => await this.addressRepo.AllAsNoTracking()
-            .Where(a => a.CityId == cityId)
+            .Where(a => a.CityId == cityId && a.NeighborhoodId == neighborhoodId)
             .To<T>()
             .ToListAsync();
     }

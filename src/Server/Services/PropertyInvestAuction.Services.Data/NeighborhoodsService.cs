@@ -23,7 +23,7 @@
             this.neighborhoodRepo = neighborhoodRepo;
         }
 
-        public async Task<bool> CheckName(string cityId, string name)
+        public async Task<bool> CheckNameAsync(string cityId, string name)
             => await this.neighborhoodRepo.AllAsNoTracking()
             .AnyAsync(n => n.CityId == cityId && n.Name == name);
 
@@ -83,5 +83,13 @@
 
             await this.neighborhoodRepo.SaveChangesAsync();
         }
+
+        public async Task<bool> CheckIfExistsAsync(string id)
+            => await this.neighborhoodRepo.AllAsNoTracking()
+            .AllAsync(n => n.Id == id);
+
+        public async Task<bool> IsNeighborghoodInCity(string neighborhoodId, string cityId)
+            => await this.neighborhoodRepo.AllAsNoTracking()
+            .AnyAsync(n => n.Id == neighborhoodId && n.CityId == cityId);
     }
 }

@@ -9,6 +9,7 @@
         public const string CountryDoesNotExists = "Country does not exists.";
         public const string CityDoesNotExists = "Citi does not exists.";
         public const string NeighborhoodDoesNotExists = "Neighborhood does not exists.";
+        public const string CityHasNoSuchNeighborhood = "City has no such neighborhood.";
 
         public const string CityNameTaken = "City already exists.";
         public const string CountryNameTaken = "Country already exists.";

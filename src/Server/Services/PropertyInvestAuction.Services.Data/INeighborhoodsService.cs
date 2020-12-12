@@ -16,7 +16,11 @@
 
         Task<Result> DeleteAsync(string id);
 
-        Task<bool> CheckName(string cityId, string name);
+        Task<bool> CheckNameAsync(string cityId, string name);
+
+        Task<bool> CheckIfExistsAsync(string id);
+
+        Task<bool> IsNeighborghoodInCity(string neighborhoodId, string cityId);
 
         Task DeleteByCityIdAsync(string cityId);
     }

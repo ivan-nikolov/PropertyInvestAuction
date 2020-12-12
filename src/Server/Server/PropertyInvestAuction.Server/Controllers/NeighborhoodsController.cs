@@ -97,6 +97,6 @@
         [Route(nameof(CheckName))]
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<bool> CheckName([FromQuery] string cityId, string name)
-            => await this.neighborhoodsService.CheckName(cityId, name);
+            => await this.neighborhoodsService.CheckNameAsync(cityId, name);
     }
 }
