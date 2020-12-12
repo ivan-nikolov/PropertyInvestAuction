@@ -22,6 +22,10 @@
             this.addressRepo = addressRepo;
         }
 
+        public async Task<bool> CheckIfExistsAsync(string id)
+            => await this.addressRepo.AllAsNoTracking()
+            .AnyAsync(a => a.Id == id);
+
         public async Task<string> CreateAsync(string name, string cityId, string neighborhoodId)
         {
             var addresss = new Address

@@ -9,7 +9,7 @@
     {
         public string Id { get; set; }
 
-        [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength, ErrorMessage = NameLenghtErroMessage)]
+        [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength, ErrorMessage = StringLenghtErroMessage)]
         public string Name { get; set; }
     }
 }

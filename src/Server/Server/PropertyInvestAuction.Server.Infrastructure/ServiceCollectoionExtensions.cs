@@ -6,6 +6,8 @@
     using System.Reflection;
     using System.Text;
 
+    using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -18,15 +20,12 @@
     using PropertyInvestAuction.Data.Common.Repositories;
     using PropertyInvestAuction.Data.Models;
     using PropertyInvestAuction.Data.Repositories;
-    using PropertyInvestAuction.Services.Data;
 
     public static class ServiceCollectoionExtensions
     {
         public static IServiceCollection AddServices(this IServiceCollection services,
             params Assembly[] assemblies)
         {
-            
-
             var mapList = GetServices(assemblies);
 
             foreach (var map in mapList)
@@ -122,6 +121,20 @@
             return services;
         }
 
+        public static IServiceCollection AddCloudinary(this IServiceCollection services, IConfiguration configuration)
+        {
+            var name = configuration["Cloudinary:Name"];
+            Account account = new Account(
+                configuration["Cloudinary:Name"],
+                configuration["Cloudinary:ApiKey"],
+                configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+            services.AddSingleton(cloudinary);
+
+            return services;
+        }
+
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
             {
@@ -164,7 +177,7 @@
                         Service = t.ImplementedInterfaces.FirstOrDefault(i => 
                             (typeof(ITransient).IsAssignableFrom(i)
                             || typeof(IScoped).IsAssignableFrom(i)
-                            ||typeof(ISingleton).IsAssignableFrom(i)) 
+                            || typeof(ISingleton).IsAssignableFrom(i)) 
                             && i.GetInterfaces().Any(ii => ii == typeof(ITransient)
                                 || ii == typeof(IScoped)
                                 || ii == typeof(ISingleton)))

@@ -8,7 +8,7 @@
     public class NeighborhoodEditRequestModel
     {
         [Required]
-        [StringLength(NeighborhoodNameMaxLength, MinimumLength = NeighborhoodNameMinLength, ErrorMessage = NameLenghtErroMessage)]
+        [StringLength(NeighborhoodNameMaxLength, MinimumLength = NeighborhoodNameMinLength, ErrorMessage = StringLenghtErroMessage)]
         public string Name { get; set; }
     }
 }

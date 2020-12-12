@@ -97,12 +97,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var errors = new List<string>();
-                foreach (var value in this.ModelState.Values)
-                {
-                    errors.AddRange(value.Errors.Select(e => e.ErrorMessage));
-                }
-                return BadRequest(errors);
+                return ValidationProblem(this.ModelState);
             }
 
             var users = (await this.identityService

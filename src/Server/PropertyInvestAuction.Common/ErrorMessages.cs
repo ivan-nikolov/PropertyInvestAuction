@@ -17,5 +17,9 @@
         public const string CategoryDoesNotExists = "Category does not exists.";
 
         public const string AddressDoesNotExists = "Address does not exists.";
+
+        public const string PhotoDoesNotExists = "Photo does not exists.";
+
+        public const string PropertyDoesNotExists = "Property does not exists.";
     }
 }

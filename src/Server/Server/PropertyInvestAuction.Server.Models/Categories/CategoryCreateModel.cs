@@ -8,7 +8,7 @@
     public class CategoryCreateModel
     {
         [Required]
-        [StringLength(CategoryNameMaxLength, MinimumLength = CategoryNameMinLength, ErrorMessage = NameLenghtErroMessage)]
+        [StringLength(CategoryNameMaxLength, MinimumLength = CategoryNameMinLength, ErrorMessage = StringLenghtErroMessage)]
         public string Name { get; set; }
     }
 }

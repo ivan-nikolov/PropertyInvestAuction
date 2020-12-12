@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services.Data\PropertyInvestAuction.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PropertyInvestAuction.Services\PropertyInvestAuction.Services.csproj" />
     <ProjectReference Include="..\PropertyInvestAuction.Server.Infrastructure\PropertyInvestAuction.Server.Infrastructure.csproj" />
     <ProjectReference Include="..\PropertyInvestAuction.Server.Models\PropertyInvestAuction.Server.Models.csproj" />
   </ItemGroup>

@@ -6,9 +6,9 @@ namespace PropertyInvestAuction.Server
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
-    using PropertyInvestAuction.Data;
     using PropertyInvestAuction.Server.Infrastructure;
     using PropertyInvestAuction.Server.Models.Identity;
+    using PropertyInvestAuction.Services;
     using PropertyInvestAuction.Services.Data;
     using PropertyInvestAuction.Services.Mapping;
     using PropertyInvestAuction.Services.Models.Identity;
@@ -28,8 +28,9 @@ namespace PropertyInvestAuction.Server
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
                 .RegisterAppServices()
-                .AddServices(typeof(IIdentityService).Assembly)
+                .AddServices(typeof(IIdentityService).Assembly, typeof(ICloudinaryService).Assembly)
                 .AddJwtAuthentication(this.Configuration)
+                .AddCloudinary(this.Configuration)
                 .AddSwagger()
                 .AddControllers();
         }

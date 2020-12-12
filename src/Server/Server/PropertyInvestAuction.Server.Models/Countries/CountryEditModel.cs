@@ -8,7 +8,7 @@
     public class CountryEditModel
     {
         [Required]
-        [StringLength(CountryNameMaxLength, MinimumLength = CountryNameMinLength, ErrorMessage = NameLenghtErroMessage)]
+        [StringLength(CountryNameMaxLength, MinimumLength = CountryNameMinLength, ErrorMessage = StringLenghtErroMessage)]
         public string Name { get; set; }
     }
 }
