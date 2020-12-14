@@ -1,6 +1,9 @@
 ﻿namespace PropertyInvestAuction.Server.Models.Addresses
 {
-    public class AddressResponseModel
+    using PropertyInvestAuction.Data.Models;
+    using PropertyInvestAuction.Services.Mapping;
+
+    public class AddressResponseModel : IMapFrom<Address>
     {
         public string Id { get; set; }
 

@@ -1,0 +1,18 @@
+<h1>Add Property</h1>
+
+<section class="address-select-wrapper">
+    <h2>Choose address</h2>
+    <app-address-select [required]="true" (addressEvent)="selectAddress($event)"></app-address-select>
+</section>
+
+<h4>Selected Address</h4>
+<section class="address-wrapper">
+    <h6>Country: {{address?.countryName}}</h6>
+    <h6>City: {{address?.cityName}}</h6>
+    <h6 *ngIf="address?.neighborhoodName">Neighborhood: {{address.neighborhoodName}}</h6>
+    <h6>Address: {{address?.name}}</h6>
+</section>
+
+<section *ngIf="addressSelected" class="form-wrapper">
+    <h3>Fill the form</h3>
+</section>

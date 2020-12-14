@@ -1,0 +1,53 @@
+<div class="form-wrapper">
+    <form [formGroup]="addressForm" #formDirectirve="ngForm">
+        <mat-form-field appearance="standard">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country" (selectionChange)="loadCities(controls.country().value)">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let country of countries" [value]="country.id">
+                    {{country.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="controls.country()">Please choose a country!</mat-error>
+        </mat-form-field>
+
+        <ng-container *ngIf="controls.country().value">
+            <mat-form-field appearance="standard">
+                <mat-label>City</mat-label>
+                <mat-select matInput type="text" placeholder="City Name" formControlName="city" (selectionChange)="loadNeighborhoods(controls.city().value)" (selectionChange)="loadAddresses(controls.city().value, '')">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let city of cities" [value]="city.id">
+                        {{city.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="controls.city().errors?.required">Please choose a city!</mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="controls.city().value">
+            <mat-form-field appearance="standard">
+                <mat-label>Neighborhood</mat-label>
+                <mat-select matInput type="text" placeholder="Neighborhood" (selectionChange)="loadAddresses(controls.city().value, controls.neighborhood().value || '')" formControlName="neighborhood">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let neighborhood of neighborhoods" [value]="neighborhood.id">
+                        {{neighborhood.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="controls.city().value">
+            <mat-form-field appearance="standard">
+                <mat-label>Address</mat-label>
+                <mat-select matInput type="text" placeholder="Address" formControlName="address">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let address of addresses" [value]="address.id">
+                        {{address.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="controls.address().errors?.required">Please choose a Address!</mat-error>
+            </mat-form-field>
+        </ng-container>
+    </form>
+    <button mat-stroked-button *ngIf="required" [disabled]="!controls.country().value || !controls.city().value">Add New Address</button>
+</div>

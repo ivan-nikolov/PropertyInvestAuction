@@ -32,11 +32,6 @@
         [Authorize]
         public async Task<ActionResult<IEnumerable<NeighborhoodResponseModel>>> GetByCityId([FromQuery] string cityId)
         {
-            if (!await this.citiesService.CheckIfExistsAsync(cityId))
-            {
-                return this.BadRequest(CityDoesNotExists);
-            }
-
             var neighborhoods = await this.neighborhoodsService.GetByCityIdAsync<NeighborhoodResponseModel>(cityId);
 
             return Ok(neighborhoods);
