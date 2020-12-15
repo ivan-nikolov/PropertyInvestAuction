@@ -1,0 +1,18 @@
+<div class="form-wrapper">
+    <h2>Add New Address</h2>
+    <div class="address-info">
+        <h5>City: {{data.cityName}}</h5>
+        <h5 *ngIf="data.neighborhoodId">Neighborhood: {{data.neighborhoodName}}</h5>
+    </div>
+    <form [formGroup]="addressForm" (ngSubmit)="addAddress()">
+        <mat-form-field appearance="standard" >
+            <mat-label>Address</mat-label>
+            <input matInput type="text" placeholder="Address" formControlName="name">
+            <mat-error *ngIf="addressForm.get('name')?.errors?.minlength">Address must by between 5 and 100 characters!</mat-error>
+            <mat-error *ngIf="addressForm.get('name')?.errors?.required">Address is required!</mat-error>
+            <mat-error *ngIf="addressForm.get('name')?.errors?.invalid">Address already exists!</mat-error>
+          </mat-form-field>
+          <button mat-stroked-button [disabled]="!addressForm.valid" type="submit">Create</button>
+    </form>
+    
+</div>

@@ -26,7 +26,7 @@
             => await this.addressRepo.AllAsNoTracking()
             .AnyAsync(a => a.Id == id);
 
-        public async Task<string> CreateAsync(string name, string cityId, string neighborhoodId)
+        public async Task<T> CreateAsync<T>(string name, string cityId, string neighborhoodId)
         {
             var addresss = new Address
             {
@@ -38,7 +38,7 @@
             await this.addressRepo.AddAsync(addresss);
             await this.addressRepo.SaveChangesAsync();
 
-            return addresss.Id;
+            return addresss.To<T>();
         }
 
         public async Task<Result> DeleteAsync(string id)

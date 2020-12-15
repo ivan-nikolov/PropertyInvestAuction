@@ -20,7 +20,11 @@ export class AddressService {
     return this.http.get<Address[]>(`${apiUrl}/addresses`, {params: params});
   }
 
-  create(address: Address): Observable<any> {
-    return this.http.post(`${apiUrl}/addresses`, {name: address.name, cityId: address.cityId, neighborhoodId: address.neighborhoodId});
+  create(address: string, cityId: string, neighborhoodId: string): Observable<Address> {
+    return this.http.post<Address>(`${apiUrl}/addresses`, {name: address, cityId: cityId, neighborhoodId: neighborhoodId});
+  }
+
+  validateId(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${apiUrl}/addresses/${id}`);
   }
 }

@@ -8,7 +8,7 @@
 
     public interface IAddressesService : ITransient
     {
-        Task<string> CreateAsync(string name, string cityId, string neighborhoodId);
+        Task<T> CreateAsync<T>(string name, string cityId, string neighborhoodId);
 
         Task<IEnumerable<T>> GetAllAsync<T>(string cityId, string neighborhoodId);
 

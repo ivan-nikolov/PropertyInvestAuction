@@ -37,6 +37,7 @@
         </ng-container>
 
         <ng-container *ngIf="controls.city().value">
+
             <mat-form-field appearance="standard">
                 <mat-label>Address</mat-label>
                 <mat-select matInput type="text" placeholder="Address" formControlName="address">
@@ -49,5 +50,5 @@
             </mat-form-field>
         </ng-container>
     </form>
-    <button mat-stroked-button *ngIf="required" [disabled]="!controls.country().value || !controls.city().value">Add New Address</button>
+    <button mat-stroked-button *ngIf="required" [disabled]="!controls.country().value || !controls.city().value" (click)="createAddress()">Add New Address</button>
 </div>

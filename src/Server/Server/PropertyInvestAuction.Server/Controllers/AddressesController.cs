@@ -37,7 +37,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Create(AddressCreateRequestModel input)
+        public async Task<ActionResult<AddressResponseModel>> Create(AddressCreateRequestModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -60,9 +60,14 @@
                 return BadRequest(CityHasNoSuchNeighborhood);
             }
 
-            var addressId = await this.addressesService.CreateAsync(input.Name, input.CityId, input.NeighborhoodId);
+            var address = await this.addressesService.CreateAsync<AddressResponseModel>(input.Name, input.CityId, input.NeighborhoodId);
 
-            return Ok(addressId);
+            return Ok(address);
         }
+
+        [HttpGet]
+        [Route(Id)]
+        public async Task<ActionResult<bool>> ValidateId(string id)
+            => await this.addressesService.CheckIfExistsAsync(id);
     }
 }

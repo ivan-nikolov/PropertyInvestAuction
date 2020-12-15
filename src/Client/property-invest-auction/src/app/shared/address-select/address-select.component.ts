@@ -2,18 +2,21 @@ import { Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular
 import { Address } from './address';
 import { Country } from '../../administration/models/country';
 import { LocationService } from '../../administration/services/location.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { City } from '../../administration/models/city';
 import { Neighborhood } from '../../administration/models/neighborhood';
 import { AddressService } from '../address.service';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddAddressComponent } from '../add-address/add-address.component';
 
 @Component({
   selector: 'app-address-select',
   templateUrl: './address-select.component.html',
   styleUrls: ['./address-select.component.css']
 })
-export class AddressSelectComponent implements OnInit, DoCheck {
+export class AddressSelectComponent implements OnInit {
 
   @Input() required: boolean;
   @Output() addressEvent = new EventEmitter<Address>();
@@ -38,22 +41,16 @@ export class AddressSelectComponent implements OnInit, DoCheck {
   constructor(
     private locationService: LocationService,
     private addressService: AddressService,
-    private fb: FormBuilder) { }
-
-  ngDoCheck(): void {
-
-    const {country = '', city = '', neighborhood = '', address = ''} = this.addressForm.value
-    
- 
-  }
+    private fb: FormBuilder,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.locationService.loadCountries().subscribe(
       res => this.countries = res
     );
 
-    this.requiredValidator = this.required ? Validators.required : Validators.nullValidator;
-    
+    this.requiredValidator = this.required ? Validators.required : Validators.nullValidator;Validators.nullValidator;
+
     this.addressForm = this.fb.group({
       'country': ['', [this.requiredValidator]],
       'city': ['', [this.requiredValidator]],
@@ -67,7 +64,9 @@ export class AddressSelectComponent implements OnInit, DoCheck {
       distinctUntilChanged((a, b) => a.country === b.country && a.city == b.city && a.neighborhood === b.neighborhood && a.address === b.address)
     )
     .subscribe(
-      res => this.setOutput()
+      res => {
+          this.setOutput();
+      }
     )
   }
 
@@ -82,6 +81,33 @@ export class AddressSelectComponent implements OnInit, DoCheck {
         this.cities = res;
       }
     )
+  }
+
+  createAddress() {
+
+    const cityId = this.controls.city()?.value || '';
+    const cityName = this.cities?.filter(c => c.id == cityId)[0]?.name;
+    const neighborhoodId = this.controls.neighborhood()?.value || '';
+    const neihborhoodName = this.neighborhoods?.filter(c => c.id == neighborhoodId)[0]?.name || '';
+
+    const addDialogRef = this.dialog.open(AddAddressComponent, {
+      width: '650px',
+      height: '400px',
+      data: {
+        cityId: cityId,
+        cityName: cityName,
+        neighborhoodId: neighborhoodId,
+        neighborhoodName: neihborhoodName
+      }
+    });
+
+    addDialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result) {
+        this.addresses.push(result);
+        this.addressForm.patchValue({'address': result.id}, {emitEvent: true})
+      }
+    });
   }
 
   loadNeighborhoods(cityId: string) {
@@ -112,7 +138,7 @@ export class AddressSelectComponent implements OnInit, DoCheck {
     const cityName = this.cities?.filter(c => c.id == cityId)[0]?.name;
     const neighborhoodId = this.controls.neighborhood()?.value || '';
     const neihborhoodName = this.neighborhoods?.filter(c => c.id == neighborhoodId)[0]?.name || '';
-    console.log('set');
+
     this.address = {
       countryName: countryName,
       countryId: this.controls.country().value,
@@ -123,7 +149,7 @@ export class AddressSelectComponent implements OnInit, DoCheck {
       id: addressId,
       name: addressName || '',
     }
-    //console.log(this.address);
+
     this.addressEvent.emit(this.address);
   }
 }
