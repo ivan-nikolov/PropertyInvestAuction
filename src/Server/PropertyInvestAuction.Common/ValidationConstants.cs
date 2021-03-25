@@ -31,6 +31,7 @@
         public const string OfferStartingBidPrice = "0.0";
         public const string OfferBidOutPrice = "100_000_000M";
 
+        //TODO: Increase max lenght
         public const int PropertyDescriptionMinLength = 10;
         public const int PropertyDescriptionMaxLength = 50;
 

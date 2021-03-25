@@ -48,7 +48,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Create(PropertyCreateRequestModel input)
+        public async Task<ActionResult> Create([FromForm]PropertyCreateRequestModel input)
         {
             if (!this.ModelState.IsValid)
             {

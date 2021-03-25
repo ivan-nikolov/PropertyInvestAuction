@@ -17,6 +17,6 @@
 
         public string AddressId { get; set; }
 
-        public IEnumerable<IFormFile> Photos { get; set; }
+        public IEnumerable<IFormFile> Photos { get; set; } = new HashSet<IFormFile>();
     }
 }
