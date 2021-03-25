@@ -10,10 +10,60 @@ h1 {
 .form-wrapper {
     box-shadow: 0px 5px 9px -3px rgba(0,0,0,0.75);
     padding: 20px;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+form button {
+    align-self: center;
+}
+
+textarea.mat-input-element {
+    height: 100px;
+}
+
+mat-form-field.category {
+    align-self: flex-start;
+    width: 30%;
 }
 
 .address-wrapper {
     margin: 20px 0px;
     display: flex;
     justify-content: space-around;
+}
+
+.property-photos {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0px;
+}
+
+.img-wrapper {
+    margin: 0px 20px 20px 0px;
+}
+
+.img-wrapper img {
+    width: 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    align-self: flex-start;
+    width: 20%;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
 }

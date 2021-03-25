@@ -14,5 +14,45 @@
 </section>
 
 <section *ngIf="addressSelected" class="form-wrapper">
-    <h3>Fill the form</h3>
+    <h3>Propery info</h3>
+
+    <form [formGroup]="propertyForm" (ngSubmit)="addProperty()">
+
+        <mat-form-field appearance="standard">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" placeholder="Property Description" formControlName="description"></textarea>
+            <mat-error *ngIf="propertyForm.get('name')?.errors?.minlength">Description must by between 10 and 50
+                characters!</mat-error>
+            <mat-error *ngIf="propertyForm.get('name')?.errors?.required">Description is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="category" appearance="standard">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="propertyForm.get('category')?.errors?.required">Please choose category!</mat-error>
+        </mat-form-field>
+
+        
+        
+        <div class="property-photos">
+            <div *ngFor='let url of photoImgs' class="img-wrapper">
+                <img [src]="url">
+            </div>
+        </div>
+        
+        <label class="custom-file-upload">
+            <input  type="file" (change)="onSelectFile($event)" multiple/>
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Choose Photos</span>
+        </label>
+        
+        <button mat-stroked-button [disabled]="!propertyForm.valid" type="submit">Create</button>
+    </form>
+
+    
 </section>

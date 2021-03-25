@@ -5,6 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../material/material.module';
 
 
 
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     RouterModule,
     PropertyRoutingModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ]
 })
 export class PropertyModule { }

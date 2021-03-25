@@ -36,7 +36,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
         else if (err.status === 404) {
           messages = ["Not found."]
         }
-        else {
+        else if(err.status.toString().startsWith('5')) {
           alert('Something went wrong.');
         }
 
