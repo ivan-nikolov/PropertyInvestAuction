@@ -7,11 +7,12 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MyPropertiesComponent } from './my-properties/my-properties.component';
+import { PropertySearchFormComponent } from './property-search-form/property-search-form.component';
 
 
 
 @NgModule({
-  declarations: [CreateComponent, MyPropertiesComponent],
+  declarations: [CreateComponent, MyPropertiesComponent, PropertySearchFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -32,7 +32,7 @@ export class PropertyService {
       var params = new HttpParams();
     
       for (const key of Object.keys(query)) {
-        params.set(key, query[key]);
+        params.set(key, String(query[key]));
       }
     
       return this.http.get<Property>(`${apiUrl}/properties`, {params: params});

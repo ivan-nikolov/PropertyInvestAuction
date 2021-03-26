@@ -1,0 +1,24 @@
+<div class="form-wrapper">
+    <form [formGroup]="propertyQueryForm" #formDirectirve="ngForm">
+        <mat-form-field appearance="standard">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" placeholder="Property Description" formControlName="description"></textarea>               
+        </mat-form-field>
+
+        <mat-form-field class="category" appearance="standard">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="categoryId">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+
+<section class="address-select-wrapper">
+    <app-address-select [required]="false" (addressEvent)="selectAddress($event)"></app-address-select>
+</section>
+
+

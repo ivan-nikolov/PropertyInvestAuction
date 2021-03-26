@@ -1,1 +1,3 @@
-<p>my-properties works!</p>
+
+<app-property-search-form (propertyEvent)="setQueryParams($event)"></app-property-search-form>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="loadProperties(paginator.pageIndex, paginator.pageSize)" showFirstLastButtons></mat-paginator>

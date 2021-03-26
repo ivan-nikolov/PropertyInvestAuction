@@ -1,4 +1,5 @@
 export interface PropertyQueryModel {
+    [key: string]: string | number | boolean,
     description: string,
     categoryId: string,
     addressId: string,
@@ -7,5 +8,4 @@ export interface PropertyQueryModel {
     countryId: string,
     page: number,
     pageSize: number,
-    myProperties: boolean,
 }

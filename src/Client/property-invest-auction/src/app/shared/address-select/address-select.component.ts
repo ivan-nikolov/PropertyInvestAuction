@@ -149,7 +149,6 @@ export class AddressSelectComponent implements OnInit {
       id: addressId,
       name: addressName || '',
     }
-
     this.addressEvent.emit(this.address);
   }
 }
