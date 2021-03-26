@@ -7,6 +7,8 @@
     {
         public string Id { get; set; }
 
+        public string Name { get; set; }
+
         public string NeighborhoodId { get; set; }
         public NeighborhoodDto Neighborhood { get; set; }
 

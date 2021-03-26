@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
@@ -36,12 +37,12 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PropertiResponseModel>>> All([FromQuery] PropertyQueryModel query)
+        public async Task<ActionResult<IEnumerable<PropertyResponseModel>>> All([FromQuery] PropertyQueryModel query)
         {
             var filters = this.GetFilters(query);
 
             var properties = await this.propertiesService
-                .GetAllAsync<PropertiResponseModel, PropertyDto>(query.PageSize, query.Page, filters);
+                .GetAllAsync<PropertyResponseModel, PropertyDto>(query.PageSize, query.Page, filters);
 
             return Ok(properties);
         }
@@ -103,6 +104,22 @@
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route(nameof(MyProperties))]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<PropertyResponseModel>>> MyProperties([FromQuery] PropertyQueryModel query)
+        {
+            Expression<Func<PropertyDto, bool>> userFilter = p => p.UserId == this.User.GetId();
+
+            var filters = this.GetFilters(query).ToList();
+            filters.Add(userFilter);
+
+
+            var properties = await this.propertiesService.GetAllAsync<PropertyResponseModel, PropertyDto>(query.PageSize, query.Page, filters);
+
+            return Ok(properties);
         }
 
         [HttpDelete]

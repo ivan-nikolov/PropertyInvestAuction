@@ -85,7 +85,7 @@
             }
 
             return await properties
-                .Skip(pageSize * pageNumber)
+                .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .To<TOutput>()
                 .ToListAsync();
