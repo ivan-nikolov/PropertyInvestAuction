@@ -6,11 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { MyPropertiesComponent } from './my-properties/my-properties.component';
 
 
 
 @NgModule({
-  declarations: [CreateComponent],
+  declarations: [CreateComponent, MyPropertiesComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

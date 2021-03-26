@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Property } from '../models/property';
+import { PropertyQueryModel } from '../models/property-query-model';
 
 const apiUrl = environment.apiUrl;
 
@@ -24,5 +25,16 @@ export class PropertyService {
     } 
 
     return this.http.post<Property>(`${apiUrl}/properties`, data);
+  }
+
+  getAll(query: PropertyQueryModel) : Observable<Property> {
+
+      var params = new HttpParams();
+    
+      for (const key of Object.keys(query)) {
+        params.set(key, query[key]);
+      }
+    
+      return this.http.get<Property>(`${apiUrl}/properties`, {params: params});
   }
 }
