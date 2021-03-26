@@ -9,7 +9,7 @@
     using PropertyInvestAuction.Services.Mapping;
     using PropertyInvestAuction.Services.Models;
 
-    public class PropertiResponseModel : IMapFrom<PropertyDto>,
+    public class PropertyResponseModel : IMapFrom<PropertyDto>,
          IHaveCustomMappings
     {
         public string Id { get; set; }
@@ -24,7 +24,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Property, PropertiResponseModel>()
+            configuration.CreateMap<Property, PropertyResponseModel>()
                 .ForMember(pr => pr.Photos, mo => mo.MapFrom(e => e.Photos.Select(p => p.Url)));
         }
     }

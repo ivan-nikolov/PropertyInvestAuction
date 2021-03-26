@@ -106,22 +106,6 @@
             return Ok();
         }
 
-        [HttpGet]
-        [Route(nameof(MyProperties))]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<PropertyResponseModel>>> MyProperties([FromQuery] PropertyQueryModel query)
-        {
-            Expression<Func<PropertyDto, bool>> userFilter = p => p.UserId == this.User.GetId();
-
-            var filters = this.GetFilters(query).ToList();
-            filters.Add(userFilter);
-
-
-            var properties = await this.propertiesService.GetAllAsync<PropertyResponseModel, PropertyDto>(query.PageSize, query.Page, filters);
-
-            return Ok(properties);
-        }
-
         [HttpDelete]
         [Route(Id)]
         [Authorize]
@@ -155,6 +139,11 @@
             if (!string.IsNullOrWhiteSpace(query.Description))
             {
                 filters.Add(x => x.Description.ToLower().Contains(query.Description.ToLower()));
+            }
+
+            if (query.MyProperties)
+            {
+                filters.Add(x => x.UserId == this.User.GetId());
             }
 
             if (!string.IsNullOrWhiteSpace(query.AddressId))
