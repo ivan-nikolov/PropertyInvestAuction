@@ -13,7 +13,5 @@
         public string CityId { get; set; }
 
         public string CountryId { get; set; }
-
-        public bool MyProperties { get; set; }
     }
 }

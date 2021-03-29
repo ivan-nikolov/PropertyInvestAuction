@@ -58,7 +58,7 @@
             return true;
         }
 
-        public async Task<Result> Edit(string id, string description, string categoryId, IEnumerable<string> newPhotos)
+        public async Task<Result> EditAsync(string id, string description, string categoryId, IEnumerable<string> newPhotos)
         {
             var property = await this.propertyRepo.All().FirstOrDefaultAsync(p => p.Id == id);
             if (property == null)
@@ -77,7 +77,8 @@
         public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput, TQueryModel>(int pageSize, int pageNumber, IEnumerable<Expression<Func<TQueryModel, bool>>> filters)
             where TQueryModel : IMapFrom<Property>
         {
-            var properties = this.propertyRepo.All().To<TQueryModel>();
+            var properties = this.propertyRepo.All()
+                .To<TQueryModel>();
 
             foreach (var filter in filters)
             {

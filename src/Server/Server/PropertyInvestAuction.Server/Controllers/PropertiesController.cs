@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
@@ -96,7 +95,7 @@
 
             var photosUrls = await this.cloudinaryService.UploadFilesAsync(input.Photos);
 
-            var result = await this.propertiesService.Edit(id, input.Description, input.CategoryId, photosUrls);
+            var result = await this.propertiesService.EditAsync(id, input.Description, input.CategoryId, photosUrls);
 
             if (result.Failure)
             {
@@ -141,11 +140,6 @@
                 filters.Add(x => x.Description.ToLower().Contains(query.Description.ToLower()));
             }
 
-            if (query.MyProperties)
-            {
-                filters.Add(x => x.UserId == this.User.GetId());
-            }
-
             if (!string.IsNullOrWhiteSpace(query.AddressId))
             {
                 filters.Add(x => x.AddressId == query.AddressId);
@@ -163,6 +157,8 @@
                 filters.Add(x => x.Address.City.CountryId == query.CountryId 
                 || x.Address.Neighborhood.City.CountryId == query.CountryId);
             }
+
+            filters.Add(x => x.UserId == this.User.GetId());
 
             return filters;
         }

@@ -1,5 +1,7 @@
 ﻿namespace PropertyInvestAuction.Services.Models
 {
+    using System.Collections.Generic;
+
     using PropertyInvestAuction.Data.Models;
     using PropertyInvestAuction.Services.Mapping;
 
@@ -16,5 +18,8 @@
 
         public string CategoryId { get; set; }
         public CategoryDto Category { get; set; }
+
+        public ICollection<PhotoDto> Photos { get; set; } = new HashSet<PhotoDto>();
+
     }
 }
