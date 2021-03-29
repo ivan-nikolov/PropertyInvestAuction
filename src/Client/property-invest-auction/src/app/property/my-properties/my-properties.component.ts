@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 import { Property } from '../models/property';
 import { PropertyQueryModel } from '../models/property-query-model';
 import { PropertyService } from '../services/property.service';
@@ -15,18 +16,29 @@ export class MyPropertiesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
   propertyQuery: PropertyQueryModel;
-  properties: Property[];
+  properties: Observable<Property[]>;
 
   constructor(private propertyService: PropertyService) { }
 
   ngOnInit(): void {
-    
+    this.propertyQuery = {
+      description: '',
+      categoryId: '',
+      countryId: '',
+      cityId: '',
+      neighborhoodId: '',
+      addressId: '',
+      page: 0,
+      pageSize: 0
+    }
+
+    this.loadProperties(0, 5);
   }
 
   loadProperties(pageIndex: number, pageSize: number) {
-    this.propertyQuery.page = pageIndex;
+    this.propertyQuery.page = pageIndex + 1;
     this.propertyQuery.pageSize = pageSize;
-    console.log(this.propertyQuery);
+    this.properties = this.propertyService.getAll(this.propertyQuery);
   }
 
   setQueryParams(event: PropertyQueryModel) {

@@ -27,14 +27,15 @@ export class PropertyService {
     return this.http.post<Property>(`${apiUrl}/properties`, data);
   }
 
-  getAll(query: PropertyQueryModel) : Observable<Property> {
+  getAll(query: PropertyQueryModel) : Observable<Property[]> {
+
+    
 
       var params = new HttpParams();
-    
       for (const key of Object.keys(query)) {
-        params.set(key, String(query[key]));
+        params = params.append(key, query[key]?.toString() ?? "");
       }
-    
-      return this.http.get<Property>(`${apiUrl}/properties`, {params: params});
+      console.log(params);
+      return this.http.get<Property[]>(`${apiUrl}/properties`, {params: params});
   }
 }
