@@ -92,6 +92,13 @@
                 .ToListAsync();
         }
 
+        public async Task<T> GetById<T>(string id)
+            => await this.propertyRepo
+            .AllAsNoTracking()
+            .Where(p => p.Id == id)
+            .To<T>()
+            .FirstOrDefaultAsync();
+
         public async Task<bool> IsUserAuthorized(string propertyId, string userId)
             => await this.propertyRepo.AllAsNoTracking()
             .AnyAsync(p => p.Id == propertyId && p.UserId == userId);

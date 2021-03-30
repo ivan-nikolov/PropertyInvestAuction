@@ -125,6 +125,21 @@
             return Ok();
         }
 
+        [HttpGet]
+        [Route(Id)]
+        [Authorize]
+        public async Task<ActionResult<PropertyResponseModel>> Details(string id)
+        {
+            if (!await this.propertiesService.IsUserAuthorized(id, this.User.GetId()))
+            {
+                return Unauthorized();
+            }
+
+            var property = await this.propertiesService.GetById<PropertyResponseModel>(id);
+
+            return Ok(property);
+        }
+
         [NonAction]
         private IEnumerable<Expression<Func<PropertyDto, bool>>> GetFilters(PropertyQueryModel query)
         {

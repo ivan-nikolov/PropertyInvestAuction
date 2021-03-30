@@ -22,7 +22,9 @@
 
         Task<IEnumerable<TOutput>> GetAllAsync<TOutput, TQueryModel>(int pageSize, int pageNumber, IEnumerable<Expression<Func<TQueryModel, bool>>> filters) where TQueryModel: IMapFrom<Property>;
 
-        Task<Result> Edit(string id, string description, string categoryId, IEnumerable<string> newPhotos);
+        Task<T> GetById<T>(string id);
+
+        Task<Result> EditAsync(string id, string description, string categoryId, IEnumerable<string> newPhotos);
 
         Task<Result> DeleteAsync(string id);
 
