@@ -8,6 +8,7 @@ import { RoleGuard } from './user/services/role.guard';
 import { UserAuthGuard } from './user/services/userAuth.guard';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { CategoriesListComponent } from './administration/categories-list/categories-list.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
       isAuthenticated: true,
       expectedRole: 'Administrator'
     }
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 
