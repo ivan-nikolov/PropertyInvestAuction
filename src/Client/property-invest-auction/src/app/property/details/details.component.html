@@ -1,0 +1,11 @@
+<mat-grid-list cols="4" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let photo of this.property?.photos">
+        <img [src]="photo.url" alt="">
+    </mat-grid-tile>
+</mat-grid-list>
+<h3>Category:</h3>
+<p>{{this.property?.categoryName}}</p>
+<h3>Address:</h3>
+<p>{{this.property?.address?.name}}</p>
+<h3>Description:</h3>
+<p>{{this.property?.description}}</p>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property';
 import { PropertyQueryModel } from '../models/property-query-model';
@@ -18,7 +19,9 @@ export class MyPropertiesComponent implements OnInit {
   propertyQuery: PropertyQueryModel;
   properties: Observable<Property[]>;
 
-  constructor(private propertyService: PropertyService) { }
+  constructor(
+    private propertyService: PropertyService
+    ) { }
 
   ngOnInit(): void {
     this.propertyQuery = {

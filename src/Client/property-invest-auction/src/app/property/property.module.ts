@@ -9,11 +9,12 @@ import { MaterialModule } from '../material/material.module';
 import { MyPropertiesComponent } from './my-properties/my-properties.component';
 import { PropertySearchFormComponent } from './property-search-form/property-search-form.component';
 import { PropertyCardComponent } from './property-card/property-card.component';
+import { DetailsComponent } from './details/details.component';
 
 
 
 @NgModule({
-  declarations: [CreateComponent, MyPropertiesComponent, PropertySearchFormComponent, PropertyCardComponent],
+  declarations: [CreateComponent, MyPropertiesComponent, PropertySearchFormComponent, PropertyCardComponent, DetailsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

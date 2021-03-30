@@ -28,14 +28,15 @@ export class PropertyService {
   }
 
   getAll(query: PropertyQueryModel) : Observable<Property[]> {
-
-    
-
       var params = new HttpParams();
       for (const key of Object.keys(query)) {
         params = params.append(key, query[key]?.toString() ?? "");
       }
       console.log(params);
       return this.http.get<Property[]>(`${apiUrl}/properties`, {params: params});
+  }
+
+  getById(id: string) : Observable<Property> {
+    return this.http.get<Property>(`${apiUrl}/properties/details/${id}`);
   }
 }

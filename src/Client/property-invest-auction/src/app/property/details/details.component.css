@@ -1,0 +1,11 @@
+img {
+    width: 100%;
+    object-fit: cover;
+}
+
+p {
+    margin-top: 2rem;
+    font-size: 25px !important;
+    font-weight: 700 !important;
+    color: #454444de !important;
+}

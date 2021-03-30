@@ -32,7 +32,6 @@ import { PropertyModule } from './property/property.module';
   ],
   imports: [
     AdministrationModule,
-    AppRoutingModule,
     BrowserModule,
     CoreModule,
     BrowserAnimationsModule,
@@ -41,6 +40,7 @@ import { PropertyModule } from './property/property.module';
     PropertyModule,
     ReactiveFormsModule,
     SharedModule,
+    AppRoutingModule,
     ToastrModule.forRoot(),
   ],
   providers: [
