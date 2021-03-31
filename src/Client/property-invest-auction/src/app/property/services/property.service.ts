@@ -32,11 +32,14 @@ export class PropertyService {
       for (const key of Object.keys(query)) {
         params = params.append(key, query[key]?.toString() ?? "");
       }
-      console.log(params);
       return this.http.get<Property[]>(`${apiUrl}/properties`, {params: params});
   }
 
   getById(id: string) : Observable<Property> {
     return this.http.get<Property>(`${apiUrl}/properties/details/${id}`);
+  }
+
+  getCount() : Observable<number> {
+    return this.http.get<number>(`${apiUrl}/properties/getCount`);
   }
 }

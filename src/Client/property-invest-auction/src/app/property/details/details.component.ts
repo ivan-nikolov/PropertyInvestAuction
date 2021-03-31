@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { PropertyService } from '../services/property.service';
 import { Property } from '../models/property';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-details',
@@ -15,7 +15,8 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private propertyService: PropertyService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private location: Location, ) { }
 
   ngOnInit(): void {
     var id = String(this.route.snapshot.paramMap.get('id'));
@@ -27,4 +28,7 @@ export class DetailsComponent implements OnInit {
       );
   }
 
+  onBackClicked() {
+    this.location.back();
+  }
 }

@@ -1,13 +1,12 @@
-import { Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Address } from './address';
 import { Country } from '../../administration/models/country';
 import { LocationService } from '../../administration/services/location.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { City } from '../../administration/models/city';
 import { Neighborhood } from '../../administration/models/neighborhood';
 import { AddressService } from '../address.service';
-import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { timer } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from '../add-address/add-address.component';
 
@@ -20,6 +19,7 @@ export class AddressSelectComponent implements OnInit {
 
   @Input() required: boolean;
   @Output() addressEvent = new EventEmitter<Address>();
+  @Input() initialAddress: Address;
 
   controls = {
     country: () => this.addressForm?.controls['country'],
@@ -52,10 +52,10 @@ export class AddressSelectComponent implements OnInit {
     this.requiredValidator = this.required ? Validators.required : Validators.nullValidator;Validators.nullValidator;
 
     this.addressForm = this.fb.group({
-      'country': ['', [this.requiredValidator]],
-      'city': ['', [this.requiredValidator]],
-      'neighborhood': [''],
-      'address': ['', [this.requiredValidator]]
+      'country': [this.initialAddress?.countryId || '', [this.requiredValidator]],
+      'city': [this.initialAddress?.cityId || '', [this.requiredValidator]],
+      'neighborhood': [this.initialAddress?.neighborhoodId || ''],
+      'address': [this.initialAddress?.id || '', [this.requiredValidator]]
     });
 
     this.addressForm.valueChanges

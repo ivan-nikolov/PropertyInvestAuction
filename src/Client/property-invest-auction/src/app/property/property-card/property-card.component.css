@@ -1,6 +1,14 @@
 .property-card {
     width: 20rem;
-    margin-right: 3rem;
+    margin:0rem 3rem 3rem 0rem;
+}
+
+.mat-card-image {
+    max-height: 13rem;
+}
+
+button {
+    text-decoration: none;
 }
 
 mat-card-actions {

@@ -18,7 +18,6 @@ export class MyPropertiesComponent implements OnInit {
   
   propertyQuery: PropertyQueryModel;
   properties: Observable<Property[]>;
-
   constructor(
     private propertyService: PropertyService
     ) { }
@@ -34,7 +33,10 @@ export class MyPropertiesComponent implements OnInit {
       page: 0,
       pageSize: 0
     }
-
+    this.propertyService.getCount()
+    .subscribe(res => {
+      this.paginator.length = res;
+    });
     this.loadProperties(0, 5);
   }
 
@@ -42,6 +44,7 @@ export class MyPropertiesComponent implements OnInit {
     this.propertyQuery.page = pageIndex + 1;
     this.propertyQuery.pageSize = pageSize;
     this.properties = this.propertyService.getAll(this.propertyQuery);
+    
   }
 
   setQueryParams(event: PropertyQueryModel) {

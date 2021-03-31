@@ -1,12 +1,14 @@
 <div class="card-wrapper">
     <mat-card class="property-card">
-        <img mat-card-image [src]="this.property.photos[0].url">
-        <mat-card-subtitle>{{property.categoryName}}</mat-card-subtitle>
-        <mat-card-subtitle>{{property.address.name}}</mat-card-subtitle>
-        <mat-card-content>{{property.description}}</mat-card-content>
+        <a routerLink="/property/details/{{property.id}}">
+            <img mat-card-image [src]="this.property.photos[0]?.url || '../assets/no-image.png'">
+            <mat-card-subtitle>{{property?.categoryName}}</mat-card-subtitle>
+            <mat-card-subtitle>{{property?.address?.name}}</mat-card-subtitle>
+            <mat-card-content>{{property?.description}}</mat-card-content>
+        </a>
         <mat-card-actions>
-            <button mat-flat-button color="accent">Edit</button>
-            <button mat-flat-button color="warn">Delete</button>
+            <a mat-flat-button color="accent">Edit</a>
+            <a mat-flat-button color="warn">Delete</a>
         </mat-card-actions>
     </mat-card>
 </div>

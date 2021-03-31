@@ -9,3 +9,7 @@ p {
     font-weight: 700 !important;
     color: #454444de !important;
 }
+
+.back-btn {
+    margin-bottom: 20px;
+}
