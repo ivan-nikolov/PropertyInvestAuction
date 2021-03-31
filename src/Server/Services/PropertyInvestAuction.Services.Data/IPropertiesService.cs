@@ -24,6 +24,8 @@
 
         Task<T> GetById<T>(string id);
 
+        Task<int> GetCountByUserAsync(string userId);
+
         Task<Result> EditAsync(string id, string description, string categoryId, IEnumerable<string> newPhotos);
 
         Task<Result> DeleteAsync(string id);

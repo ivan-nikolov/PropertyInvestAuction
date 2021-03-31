@@ -77,7 +77,9 @@
         public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput, TQueryModel>(int pageSize, int pageNumber, IEnumerable<Expression<Func<TQueryModel, bool>>> filters)
             where TQueryModel : IMapFrom<Property>
         {
-            var properties = this.propertyRepo.All()
+            var properties = this.propertyRepo
+                .All()
+                .OrderByDescending(p => p.CreatedOn)
                 .To<TQueryModel>();
 
             foreach (var filter in filters)
@@ -96,8 +98,15 @@
             => await this.propertyRepo
             .AllAsNoTracking()
             .Where(p => p.Id == id)
+            .To<PropertyDto>()
             .To<T>()
             .FirstOrDefaultAsync();
+
+        public async Task<int> GetCountByUserAsync(string userId)
+            => await this.propertyRepo
+            .All()
+            .Where(p => p.UserId == userId)
+            .CountAsync();
 
         public async Task<bool> IsUserAuthorized(string propertyId, string userId)
             => await this.propertyRepo.AllAsNoTracking()

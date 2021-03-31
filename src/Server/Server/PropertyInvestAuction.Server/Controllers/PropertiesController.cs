@@ -126,7 +126,7 @@
         }
 
         [HttpGet]
-        [Route(Id)]
+        [Route("Details/{Id}")]
         [Authorize]
         public async Task<ActionResult<PropertyResponseModel>> Details(string id)
         {
@@ -138,6 +138,15 @@
             var property = await this.propertiesService.GetById<PropertyResponseModel>(id);
 
             return Ok(property);
+        }
+
+        [HttpGet(nameof(GetCount))]
+        [Authorize]
+        public async Task<ActionResult<int>> GetCount()
+        {
+            var count = await this.propertiesService.GetCountByUserAsync(this.User.GetId());
+
+            return Ok(count);
         }
 
         [NonAction]
